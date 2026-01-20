@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Get the best live foreign currency exchange rates in West Ealing and Hanwell, London. Competitive buy and sell rates for USD, EUR, JPY and more. Order online with Ealing Exchange.">
+    <title>Ealing Exchange | Best Currency Rates in West Ealing, London</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'brand-blue': '#0A2540',
+              'brand-teal': '#00D09C',
+              'brand-yellow': '#FDB813',
+            },
+            boxShadow: {
+              'inner-top': 'inset 0 4px 6px -1px rgb(0 0 0 / 0.1)',
+            }
+          },
+        },
+      };
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Poppins', sans-serif;
+      }
+      /* Custom slider styles */
+      .slider-track {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 8px;
+        border-radius: 5px;
+        outline: none;
+        transition: opacity .2s;
+      }
+      .slider-track:hover {
+        opacity: 1;
+      }
+      .slider-track::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: #FDB813; /* brand-yellow */
+        cursor: pointer;
+        border: 3px solid white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        margin-top: -7px; /* Center thumb on track */
+      }
+      .slider-track::-moz-range-thumb {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: #FDB813; /* brand-yellow */
+        cursor: pointer;
+        border: 3px solid white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+      }
+      /* Chatbot pulse animation */
+      @keyframes pulse {
+        0% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(253, 184, 19, 0.7);
+        }
+        70% {
+          transform: scale(1);
+          box-shadow: 0 0 0 10px rgba(253, 184, 19, 0);
+        }
+        100% {
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(253, 184, 19, 0);
+        }
+      }
+      .chatbot-pulse {
+        animation: pulse 2.5s infinite;
+      }
+    </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FinancialService",
+    "name": "Ealing Exchange",
+    "description": "Get the best live foreign currency exchange rates in West Ealing and Hanwell, London. Competitive buy and sell rates for USD, EUR, JPY and more. Order online with Ealing Exchange.",
+    "url": "https://www.ealingexchange.co.uk",
+    "priceRange": "££",
+    "currenciesAccepted": "GBP, USD, EUR, JPY, AUD, CAD",
+    "openingHours": "Mo-Sa 09:00-18:00",
+    "department": [
+      {
+        "@type": "FinancialService",
+        "name": "Ealing Exchange - West Ealing",
+        "telephone": "+442088406420",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "16 The Broadway, West Ealing",
+          "addressLocality": "London",
+          "postalCode": "W13 0SR",
+          "addressCountry": "GB"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": "51.5126",
+          "longitude": "-0.3204"
+        }
+      },
+      {
+        "@type": "FinancialService",
+        "name": "Ealing Exchange - Hanwell",
+        "telephone": "+442033363633",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "111 Uxbridge Rd",
+          "addressLocality": "London",
+          "postalCode": "W7 3ST",
+          "addressCountry": "GB"
+        }
+      }
+    ]
+  }
+  </script>
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.1/",
+    "react": "https://esm.sh/react@^19.1.1",
+    "vite": "https://esm.sh/vite@^7.1.2",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.1/",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.0.0",
+    "chart.js": "https://esm.sh/chart.js@^4.5.0",
+    "react-chartjs-2": "https://esm.sh/react-chartjs-2@^5.3.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-slate-50 text-slate-800">
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>
