@@ -23,6 +23,7 @@ const AdminPage = lazy(() => import('./components/pages/AdminPage'));
 const MoneyTransferPage = lazy(() => import('./components/pages/MoneyTransferPage'));
 const BlogPage = lazy(() => import('./components/pages/BlogPage'));
 const BlogPostPage = lazy(() => import('./components/pages/BlogPostPage'));
+const UmrahQuotePage = lazy(() => import('./components/pages/UmrahQuotePage'));
 
 const App: React.FC = () => {
   const [appData, setAppData] = useState<AppData | null>(null);
@@ -139,6 +140,9 @@ const App: React.FC = () => {
     if (path.startsWith('/blog')) {
       return { title: 'Travel Money Tips & Guides | Ealing Exchange Blog', description: 'Expert advice on currency exchange, travel budgeting, and getting the best rates.' };
     }
+    if (path.startsWith('/umrah')) {
+      return { title: 'Umrah Quote Calculator | Instant Umrah Package Prices | Travel Time Global', description: 'Get an instant Umrah quote in 30 seconds. 3-star, 4-star, and 5-star packages available. ATOL protected.' };
+    }
     return {};
   };
 
@@ -192,6 +196,11 @@ const App: React.FC = () => {
 
     if (path === '/') {
       return renderHomePage();
+    }
+
+    // Full-screen pages (no container wrapper)
+    if (path.startsWith('/umrah')) {
+      return <UmrahQuotePage />;
     }
 
     const pageContent = () => {

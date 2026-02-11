@@ -26,7 +26,7 @@ const Hero: React.FC<Props> = (props) => {
   return (
     <section className="relative bg-white pt-12 pb-16 md:pt-16 md:pb-20 overflow-hidden">
       <div className="absolute top-0 left-0 right-0 z-20">
-        <Ticker />
+        <Ticker rates={props.rates} />
       </div>
       <div className="container mx-auto px-4 mt-8">
         <div className="grid md:grid-cols-2 gap-x-12 gap-y-16 items-center">

@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Time Global & Ealing Exchange - Business Growth Plan</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: #1a1a2e;
+            background: #fff;
+            font-size: 11pt;
+        }
+        
+        .page {
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 15mm;
+            page-break-after: always;
+        }
+        
+        .page:last-child {
+            page-break-after: auto;
+        }
+        
+        /* Cover Page */
+        .cover {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: white;
+            padding: 40mm;
+        }
+        
+        .cover h1 {
+            font-size: 32pt;
+            font-weight: 700;
+            margin-bottom: 10mm;
+            letter-spacing: -0.5px;
+        }
+        
+        .cover .subtitle {
+            font-size: 16pt;
+            opacity: 0.9;
+            margin-bottom: 20mm;
+        }
+        
+        .cover .tagline {
+            font-size: 12pt;
+            opacity: 0.7;
+            max-width: 80%;
+        }
+        
+        .cover .date {
+            position: absolute;
+            bottom: 20mm;
+            font-size: 10pt;
+            opacity: 0.6;
+        }
+        
+        .logo-text {
+            font-size: 14pt;
+            font-weight: 600;
+            color: #e94560;
+            margin-bottom: 5mm;
+            letter-spacing: 2px;
+        }
+        
+        /* Headers */
+        h1 {
+            font-size: 20pt;
+            color: #1a1a2e;
+            margin-bottom: 5mm;
+            padding-bottom: 3mm;
+            border-bottom: 3px solid #e94560;
+        }
+        
+        h2 {
+            font-size: 14pt;
+            color: #0f3460;
+            margin: 6mm 0 3mm 0;
+        }
+        
+        h3 {
+            font-size: 12pt;
+            color: #16213e;
+            margin: 4mm 0 2mm 0;
+        }
+        
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 3mm 0 5mm 0;
+            font-size: 9pt;
+        }
+        
+        th {
+            background: #1a1a2e;
+            color: white;
+            padding: 2mm 3mm;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        td {
+            padding: 2mm 3mm;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        /* Cards */
+        .card {
+            background: #f8f9fa;
+            border-radius: 3mm;
+            padding: 4mm;
+            margin: 3mm 0;
+            border-left: 4px solid #e94560;
+        }
+        
+        .card.highlight {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            border-left: none;
+        }
+        
+        .card.highlight h3 {
+            color: #e94560;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3mm;
+            margin: 4mm 0;
+        }
+        
+        .stat-box {
+            background: #0f3460;
+            color: white;
+            padding: 4mm;
+            border-radius: 2mm;
+            text-align: center;
+        }
+        
+        .stat-box .number {
+            font-size: 18pt;
+            font-weight: 700;
+            color: #e94560;
+        }
+        
+        .stat-box .label {
+            font-size: 8pt;
+            opacity: 0.8;
+        }
+        
+        /* Lists */
+        ul, ol {
+            margin: 2mm 0 2mm 5mm;
+        }
+        
+        li {
+            margin: 1mm 0;
+        }
+        
+        /* Callout */
+        .callout {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 2mm;
+            padding: 3mm;
+            margin: 3mm 0;
+        }
+        
+        .callout.success {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .callout.info {
+            background: #e7f3ff;
+            border-color: #0066cc;
+        }
+        
+        /* Script boxes */
+        .script-box {
+            background: #f0f7ff;
+            border-left: 4px solid #0066cc;
+            padding: 3mm;
+            margin: 2mm 0;
+            font-style: italic;
+        }
+        
+        /* Two column */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5mm;
+        }
+        
+        /* Phase timeline */
+        .phase {
+            display: flex;
+            align-items: flex-start;
+            margin: 3mm 0;
+        }
+        
+        .phase-number {
+            background: #e94560;
+            color: white;
+            width: 8mm;
+            height: 8mm;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 10pt;
+            margin-right: 3mm;
+            flex-shrink: 0;
+        }
+        
+        .phase-content {
+            flex: 1;
+        }
+        
+        .phase-content h3 {
+            margin: 0 0 1mm 0;
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .page {
+                padding: 10mm;
+            }
+            
+            .cover {
+                min-height: auto;
+                padding: 30mm;
+            }
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            font-size: 8pt;
+            color: #666;
+            margin-top: 10mm;
+            padding-top: 3mm;
+            border-top: 1px solid #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+
+<!-- COVER PAGE -->
+<div class="page cover">
+    <div class="logo-text">TRAVEL TIME GLOBAL</div>
+    <h1>Business Growth Plan<br>2026</h1>
+    <p class="subtitle">Ealing Exchange & Travel Time Global</p>
+    <p class="tagline">A comprehensive strategy to scale revenue across currency exchange, remittance, Umrah travel, and electronics services</p>
+    <p class="date">Prepared January 2026</p>
+</div>
+
+<!-- EXECUTIVE SUMMARY -->
+<div class="page">
+    <h1>📊 Executive Summary</h1>
+    
+    <div class="stats-grid">
+        <div class="stat-box">
+            <div class="number">£9.08B</div>
+            <div class="label">UK Remittance Market</div>
+        </div>
+        <div class="stat-box">
+            <div class="number">100K</div>
+            <div class="label">UK Umrah Pilgrims/Year</div>
+        </div>
+        <div class="stat-box">
+            <div class="number">£1B+</div>
+            <div class="label">UK Phone Repair Market</div>
+        </div>
+    </div>
+    
+    <div class="card highlight">
+        <h3>The Opportunity</h3>
+        <p>You're sitting on a goldmine. Ealing's demographics (54% BAME, 30% Asian) perfectly match your service offerings. With two branches in high-footfall locations, existing customer trust, and a unique multi-service model, the growth potential is significant.</p>
+    </div>
+    
+    <h2>Key Growth Areas</h2>
+    
+    <table>
+        <tr>
+            <th>Service</th>
+            <th>Current</th>
+            <th>Opportunity</th>
+            <th>Potential Revenue</th>
+        </tr>
+        <tr>
+            <td><strong>Umrah Packages</strong></td>
+            <td>Not offered</td>
+            <td>100K UK pilgrims, £2-5K each</td>
+            <td>£15K+ commission/year</td>
+        </tr>
+        <tr>
+            <td><strong>Phone Buyback</strong></td>
+            <td>Limited</td>
+            <td>Instant cash beats all online</td>
+            <td>↑25% revenue</td>
+        </tr>
+        <tr>
+            <td><strong>Currency Exchange</strong></td>
+            <td>Active</td>
+            <td>Beat Post Office/airports</td>
+            <td>↑20% revenue</td>
+        </tr>
+        <tr>
+            <td><strong>Remittance</strong></td>
+            <td>Active</td>
+            <td>Restaurant partnerships</td>
+            <td>↑30% volume</td>
+        </tr>
+    </table>
+    
+    <h2>Your Competitive Advantages</h2>
+    
+    <div class="two-col">
+        <div class="card">
+            <h3>✅ Multi-Service Model</h3>
+            <p>No competitor offers currency + remittance + repairs + buyback under one roof</p>
+        </div>
+        <div class="card">
+            <h3>✅ Local Trust</h3>
+            <p>10+ years serving the community, personal relationships</p>
+        </div>
+        <div class="card">
+            <h3>✅ Prime Locations</h3>
+            <p>West Ealing + Hanwell (opposite Lidl)</p>
+        </div>
+        <div class="card">
+            <h3>✅ Instant Cash</h3>
+            <p>Phone buyback with immediate payment beats all online competitors</p>
+        </div>
+    </div>
+    
+    <div class="footer">Travel Time Global & Ealing Exchange - Confidential</div>
+</div>
+
+<!-- LOCATION ANALYSIS -->
+<div class="page">
+    <h1>📍 Your Locations</h1>
+    
+    <div class="two-col">
+        <div>
+            <h2>West Ealing (Main Branch)</h2>
+            <p><strong>16 The Broadway, W13 0SR</strong></p>
+            <p>📞 020 8840 6420</p>
+            <p>⭐ 4.4 stars (24 reviews)</p>
+            
+            <h3>Nearby</h3>
+            <ul>
+                <li>Waitrose & Partners</li>
+                <li>Multiple restaurants & cafes</li>
+                <li>Sainsbury's, Boots</li>
+            </ul>
+            
+            <h3>Opportunities</h3>
+            <ul>
+                <li>770 new homes (Jigsaw development)</li>
+                <li>Restaurant worker remittance</li>
+                <li>Student market</li>
+            </ul>
+        </div>
+        <div>
+            <h2>Hanwell Branch</h2>
+            <p><strong>111 Uxbridge Rd, W7 3ST</strong></p>
+            <p>📞 020 3336 3633</p>
+            <p>⭐ 4.7 stars (11 reviews)</p>
+            
+            <h3>Key Advantage</h3>
+            <div class="callout success">
+                <strong>Directly opposite large Lidl!</strong><br>
+                High footfall from shoppers
+            </div>
+            
+            <h3>Opportunities</h3>
+            <ul>
+                <li>Capture Lidl shoppers</li>
+                <li>Eastern European remittance (Poland, Romania)</li>
+                <li>Phone repair expertise</li>
+            </ul>
+        </div>
+    </div>
+    
+    <h2>Google Reviews Target</h2>
+    <table>
+        <tr>
+            <th>Branch</th>
+            <th>Current</th>
+            <th>3-Month Target</th>
+            <th>12-Month Target</th>
+        </tr>
+        <tr>
+            <td>West Ealing</td>
+            <td>24 reviews, 4.4⭐</td>
+            <td>50 reviews</td>
+            <td>100+ reviews, 4.7⭐</td>
+        </tr>
+        <tr>
+            <td>Hanwell</td>
+            <td>11 reviews, 4.7⭐</td>
+            <td>30 reviews</td>
+            <td>50+ reviews</td>
+        </tr>
+    </table>
+    
+    <div class="callout info">
+        <strong>💡 Quick Win:</strong> Ask every happy customer for a Google review. One per day = 365 reviews/year!
+    </div>
+    
+    <div class="footer">Travel Time Global & Ealing Exchange - Confidential</div>
+</div>
+
+<!-- COMPETITOR ANALYSIS -->
+<div class="page">
+    <h1>🏪 Key Competitors</h1>
+    
+    <h2>Currency Exchange</h2>
+    <table>
+        <tr>
+            <th>Competitor</th>
+            <th>Their Weakness</th>
+            <th>Your Advantage</th>
+        </tr>
+        <tr>
+            <td><strong>Post Office</strong></td>
+            <td>Hidden £31 spread on €1000, long queues</td>
+            <td>Better rates, faster service</td>
+        </tr>
+        <tr>
+            <td><strong>Travelex/Airports</strong></td>
+            <td>£169 worse on €1000!</td>
+            <td>Much better rates</td>
+        </tr>
+        <tr>
+            <td><strong>No1 Currency</strong></td>
+            <td>Ealing only, no repairs</td>
+            <td>Multi-service, closer</td>
+        </tr>
+        <tr>
+            <td><strong>Southall exchanges</strong></td>
+            <td>20 min away</td>
+            <td>Local convenience</td>
+        </tr>
+    </table>
+    
+    <h2>Phone Buyback</h2>
+    <table>
+        <tr>
+            <th>Competitor</th>
+            <th>Their Weakness</th>
+            <th>Your Advantage</th>
+        </tr>
+        <tr>
+            <td><strong>musicMagpie</strong></td>
+            <td>7-14 day wait for payment</td>
+            <td rowspan="4" style="background:#d4edda; font-weight:bold;">INSTANT CASH<br>No postage<br>No waiting<br>Data wipe in front of customer</td>
+        </tr>
+        <tr>
+            <td><strong>Mazuma</strong></td>
+            <td>Must post device</td>
+        </tr>
+        <tr>
+            <td><strong>CeX</strong></td>
+            <td>Lower prices, queues</td>
+        </tr>
+        <tr>
+            <td><strong>Envirofone</strong></td>
+            <td>3-5 day payment</td>
+        </tr>
+    </table>
+    
+    <h2>Umrah & Hajj Travel</h2>
+    <table>
+        <tr>
+            <th>Competitor</th>
+            <th>Location</th>
+            <th>Your Advantage</th>
+        </tr>
+        <tr>
+            <td><strong>Qibla Travels</strong></td>
+            <td>Southall (20 min away)</td>
+            <td rowspan="3">Local West Ealing convenience + bundle with currency exchange</td>
+        </tr>
+        <tr>
+            <td><strong>Southall Travel</strong></td>
+            <td>Southall</td>
+        </tr>
+        <tr>
+            <td><strong>Al-Amanah</strong></td>
+            <td>Southall</td>
+        </tr>
+    </table>
+    
+    <div class="callout success">
+        <strong>Key Insight:</strong> All Umrah agents are in Southall - West Ealing has ZERO local providers. Huge gap!
+    </div>
+    
+    <div class="footer">Travel Time Global & Ealing Exchange - Confidential</div>
+</div>
+
+<!-- IMPLEMENTATION PLAN -->
+<div class="page">
+    <h1>📈 Implementation Roadmap</h1>
+    
+    <div class="phase">
+        <div class="phase-number">1</div>
+        <div class="phase-content">
+            <h3>Quick Wins (Week 1-4)</h3>
+            <ul>
+                <li>Optimize Google Business Profiles (add all services, photos)</li>
+                <li>Update window signage: "WE BUY PHONES - INSTANT CASH"</li>
+                <li>Staff training on cross-selling scripts</li>
+                <li>Start asking for Google reviews</li>
+            </ul>
+            <p><strong>Cost:</strong> £100-200 | <strong>Time:</strong> 1 week</p>
+        </div>
+    </div>
+    
+    <div class="phase">
+        <div class="phase-number">2</div>
+        <div class="phase-content">
+            <h3>Digital Enhancement (Week 2-6)</h3>
+            <ul>
+                <li>Add phone trade-in page to website</li>
+                <li>Add "Beat the Post Office" savings calculator</li>
+                <li>Set up WhatsApp Business for quick quotes</li>
+                <li>Add Google Reviews widget</li>
+            </ul>
+            <p><strong>Dev Time:</strong> 20-30 hours</p>
+        </div>
+    </div>
+    
+    <div class="phase">
+        <div class="phase-number">3</div>
+        <div class="phase-content">
+            <h3>Umrah Launch (Month 2-3)</h3>
+            <ul>
+                <li>Partner with ATOL-licensed Umrah wholesaler</li>
+                <li>Create Umrah enquiry form on website</li>
+                <li>Window display: "Umrah Packages - Local & Trusted"</li>
+                <li>Prepare December 2026 campaign (peak season)</li>
+            </ul>
+            <p><strong>Revenue Potential:</strong> 50 bookings × £3,000 = £150K GMV → £7,500-15,000 commission</p>
+        </div>
+    </div>
+    
+    <div class="phase">
+        <div class="phase-number">4</div>
+        <div class="phase-content">
+            <h3>Phone Buyback Push (Month 2-4)</h3>
+            <ul>
+                <li>Large sign facing Lidl: "SELL YOUR OLD PHONE"</li>
+                <li>Price match promise: "Beat any online quote"</li>
+                <li>Online quote calculator on website</li>
+                <li>Bundle: "Trade phone → Get travel money"</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="phase">
+        <div class="phase-number">5</div>
+        <div class="phase-content">
+            <h3>B2B Partnerships (Month 3-6)</h3>
+            <ul>
+                <li>Partner with 10 local restaurants for staff remittance</li>
+                <li>Business device repair contracts</li>
+                <li>Welcome packs for new Jigsaw development residents</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div class="phase">
+        <div class="phase-number">6</div>
+        <div class="phase-content">
+            <h3>Travel Time Global Portal (Month 6-12)</h3>
+            <ul>
+                <li>Build full travel booking platform</li>
+                <li>Umrah packages, flights, hotels</li>
+                <li>Cross-promote with Ealing Exchange</li>
+            </ul>
+        </div>
+    </div>
+    
+    <h2>Budget Summary (Year 1)</h2>
+    <table>
+        <tr>
+            <th>Item</th>
+            <th>Cost</th>
+        </tr>
+        <tr><td>Window signage (both shops)</td><td>£300</td></tr>
+        <tr><td>Printed materials</td><td>£200</td></tr>
+        <tr><td>Marketing (social, local)</td><td>£500</td></tr>
+        <tr><td>Website development</td><td>£0 (in-house)</td></tr>
+        <tr><td><strong>Total</strong></td><td><strong>~£1,000</strong></td></tr>
+    </table>
+    
+    <div class="footer">Travel Time Global & Ealing Exchange - Confidential</div>
+</div>
+
+<!-- STAFF GUIDE -->
+<div class="page">
+    <h1>👥 Staff Quick Reference</h1>
+    <p style="text-align:center; margin-bottom:5mm;"><em>Print this page and keep at the counter!</em></p>
+    
+    <h2>Our Services (All Under One Roof!)</h2>
+    <div class="stats-grid">
+        <div class="stat-box">💱 Currency<br><small>40+ currencies</small></div>
+        <div class="stat-box">💸 Remittance<br><small>Western Union</small></div>
+        <div class="stat-box">📱 Phone Repair<br><small>Same day</small></div>
+        <div class="stat-box">📲 Phone Trade-In<br><small>Instant cash</small></div>
+        <div class="stat-box">💻 Laptop Trade-In<br><small>Instant cash</small></div>
+        <div class="stat-box">✈️ Travel<br><small>Flights, Umrah</small></div>
+    </div>
+    
+    <h2>Cross-Selling Scripts</h2>
+    
+    <div class="script-box">
+        <strong>After Currency Exchange:</strong><br>
+        "Are you traveling? We have travel SIMs and phone cases too!"<br>
+        "Got an old phone? Trade it in for extra travel money!"
+    </div>
+    
+    <div class="script-box">
+        <strong>After Phone Repair:</strong><br>
+        "Planning any trips? We do currency - better rates than Post Office!"<br>
+        "Do you send money abroad? We do Western Union too!"
+    </div>
+    
+    <div class="script-box">
+        <strong>Walk-In Greeting:</strong><br>
+        "Hi! We do currency, money transfer, phone repairs AND buy phones - all here!"
+    </div>
+    
+    <h2>Beat The Competition</h2>
+    <table>
+        <tr>
+            <th>They Mention...</th>
+            <th>You Say...</th>
+        </tr>
+        <tr>
+            <td>Post Office</td>
+            <td>"Our rates are better - check the board! And no queues."</td>
+        </tr>
+        <tr>
+            <td>Online rates</td>
+            <td>"We match online rates, and you get cash instantly!"</td>
+        </tr>
+        <tr>
+            <td>Online phone trade-in</td>
+            <td>"We pay instant cash - no postage, no waiting 2 weeks!"</td>
+        </tr>
+    </table>
+    
+    <h2>Key 2026 Dates</h2>
+    <table>
+        <tr>
+            <th>Date</th>
+            <th>Event</th>
+            <th>Push These</th>
+        </tr>
+        <tr><td>Feb 28</td><td>Ramadan starts</td><td>Remittance, Umrah</td></tr>
+        <tr><td>Mar 30</td><td>Eid al-Fitr</td><td>Travel money, flights</td></tr>
+        <tr><td>Jun 5-10</td><td>Hajj season</td><td>Umrah packages</td></tr>
+        <tr><td>Oct 20</td><td>Diwali</td><td>India remittance</td></tr>
+        <tr><td>December</td><td>Peak Umrah</td><td>Umrah, currency</td></tr>
+    </table>
+    
+    <div class="callout success">
+        <strong>⭐ Ask For Reviews!</strong><br>
+        "If you were happy, a Google review would really help us!"<br>
+        <strong>Targets:</strong> West Ealing → 100 reviews | Hanwell → 50 reviews
+    </div>
+    
+    <div class="footer">Travel Time Global & Ealing Exchange - Staff Reference Guide</div>
+</div>
+
+<!-- FINAL PAGE -->
+<div class="page">
+    <h1>🎯 Summary & Next Steps</h1>
+    
+    <div class="card highlight">
+        <h3>The Bottom Line</h3>
+        <p>You're already successful with 10+ years of customer trust. This plan amplifies what's working. The Umrah market alone could add £15,000+ annual profit with just 50 bookings. Your "instant cash" phone buyback beats every online competitor.</p>
+    </div>
+    
+    <h2>This Week</h2>
+    <ol>
+        <li>☐ Update Google Business Profiles (add all services, 10+ photos)</li>
+        <li>☐ Print staff guide and do 30-min training</li>
+        <li>☐ Start asking every happy customer for a Google review</li>
+        <li>☐ Order "WE BUY PHONES - INSTANT CASH" window signs</li>
+    </ol>
+    
+    <h2>This Month</h2>
+    <ol>
+        <li>☐ Set up WhatsApp Business</li>
+        <li>☐ Contact Umrah wholesaler to explore partnership</li>
+        <li>☐ Visit 5 local restaurants about staff remittance deals</li>
+    </ol>
+    
+    <h2>Success Metrics to Track</h2>
+    <table>
+        <tr>
+            <th>Metric</th>
+            <th>Now</th>
+            <th>3 Months</th>
+            <th>12 Months</th>
+        </tr>
+        <tr>
+            <td>Google Reviews (total)</td>
+            <td>35</td>
+            <td>80</td>
+            <td>150+</td>
+        </tr>
+        <tr>
+            <td>Phone trade-ins/month</td>
+            <td>?</td>
+            <td>20</td>
+            <td>50</td>
+        </tr>
+        <tr>
+            <td>Umrah enquiries/month</td>
+            <td>0</td>
+            <td>10</td>
+            <td>30</td>
+        </tr>
+        <tr>
+            <td>Staff cross-sell rate</td>
+            <td>?</td>
+            <td>10%</td>
+            <td>25%</td>
+        </tr>
+    </table>
+    
+    <div style="margin-top:10mm; padding:5mm; background:#f8f9fa; border-radius:3mm; text-align:center;">
+        <h2 style="margin:0; color:#0f3460;">Questions?</h2>
+        <p style="margin:2mm 0 0 0;">This plan was prepared to help scale Travel Time Global & Ealing Exchange.</p>
+        <p style="margin:2mm 0 0 0;"><strong>West Ealing:</strong> 020 8840 6420 | <strong>Hanwell:</strong> 020 3336 3633</p>
+        <p style="margin:2mm 0 0 0;">🌐 ealingexchange.com</p>
+    </div>
+    
+    <div class="footer">Travel Time Global & Ealing Exchange - Confidential - January 2026</div>
+</div>
+
+</body>
+</html>

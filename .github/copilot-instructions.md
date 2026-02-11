@@ -1,0 +1,26 @@
+# Copilot Instructions for Ealing Exchange
+
+- Stack: React 19 + TypeScript + Vite; entry mounts in [src/index.tsx](src/index.tsx) with `HelmetProvider`.
+- Routing is manual (no react-router): [src/App.tsx](src/App.tsx) tracks `path` in state, updates with `window.history.pushState`, and lazy-loads page components via `React.lazy`/`Suspense`.
+- Homepage composition: `Hero` + `ValueProps` + `HowItWorks` + `LiveRatesTable` + `ReviewsSection` + `FAQSection`, all driven by `appData` fetched on load in [src/App.tsx](src/App.tsx).
+- SEO: dynamic title/description per path in [src/App.tsx](src/App.tsx) and rendered through [src/components/SEO.tsx](src/components/SEO.tsx).
+- Data source: Firestore via [src/services/firestoreService.ts](src/services/firestoreService.ts) (collections for rates, currencies, stores, settings, orders, subscribers, rateAlerts, leads, customers). `getExchangeDataFromFirestore` assembles `AppData`; GBP is injected if missing in [src/services/exchangeService.ts](src/services/exchangeService.ts).
+- Admin writes: `updateRatesInFirestore`, `updateStoresInFirestore`, `updateSiteSettingsInFirestore`, and `updateOrderStatusInFirestore` wrap Firestore mutations; keep payloads aligned with `types.ts` models.
+- Orders/leads/newsletter: `createOrder`, `createLead`, `addSubscriber`, `createRateAlert` delegate to Firestore helpers and surface friendly errors; form submissions expect `CalculatorMode` strings per [src/types.ts](src/types.ts).
+- Auth: Firebase email/password auth in [src/services/firebase.ts](src/services/firebase.ts); Admin login dialog in [src/components/AdminLoginModal.tsx](src/components/AdminLoginModal.tsx) stores `adminUser` in `localStorage` and redirects to `/admin`.
+- Admin area: [src/components/pages/AdminPage.tsx](src/components/pages/AdminPage.tsx) switches tabs (`Dashboard`, `Orders`, `Rates & Inventory`, `Customers`, `Blog`, `Settings`) via local state; each tab lives under [src/components/admin](src/components/admin) and should consume the service layer instead of direct Firestore calls.
+- Chatbot: [src/services/geminiService.ts](src/services/geminiService.ts) sends `sendMessage` requests to an Apps Script URL; when `IS_MOCK_MODE` is true, it falls back to the local sales-agent tree for deterministic replies.
+- Blog content is static markdown/HTML stored in [src/data/blogPosts.ts](src/data/blogPosts.ts); `BlogPage`/`BlogPostPage` render from the slug.
+- UI patterns: Tailwind utility classes throughout; `Card` ([src/components/ui/Card.tsx](src/components/ui/Card.tsx)) standardizes padding/border; `Spinner` for loading; `Motion` helpers ([src/components/ui/Motion.tsx](src/components/ui/Motion.tsx)) wrap `framer-motion` for fade/scale effects.
+- State conventions: `CalculatorMode.BUY_FOREIGN` vs `SELL_FOREIGN` drive rate selection and messaging; `selectedCurrencyForCalc` syncs table clicks with the hero calculator in [src/App.tsx](src/App.tsx).
+- Navigation helpers: `handleNavigate` in [src/App.tsx](src/App.tsx) guards `/admin` when not logged in, updates mode when provided, and scrolls to top; reuse this instead of direct `window.location` changes.
+- Error handling: service functions throw user-friendly errors; UI shows inline cards or banners. Maintain this style when adding new fetches.
+- Mocking/testing: Vitest config uses jsdom; tests in [src/test/services.test.ts](src/test/services.test.ts) mock `IS_MOCK_MODE` to avoid live calls but the current services still hit Firestore—stub the service layer when unit testing to prevent network access.
+- Seeding: [src/scripts/seedFirestore.ts](src/scripts/seedFirestore.ts) seeds currencies/rates/stores/site settings with the same Firebase config; run via ts-node/tsx before first boot if Firestore is empty.
+- Build/run commands: `npm run dev` (Vite), `npm run build` (tsc -b + vite build), `npm run preview`, `npm run test` or `npm run test:run` (Vitest). No custom env files are referenced; Firebase config is inline.
+- Deployment: project targets Firebase Hosting (see firebase.json); guides are in DEPLOYMENT_GUIDE.md and DEPLOY_TO_FIREBASE.md at repo root.
+- Accessibility/UX: modals trap clicks via backdrop; buttons/inputs use Tailwind focus rings; keep new components consistent.
+- Styling: prefer Tailwind classes; `tailwind-merge` is available if you need to merge dynamic className strings.
+- Performance: leverage existing lazy loading for page-level splits; keep above-the-fold components light and reuse `Suspense` fallback patterns used in [src/App.tsx](src/App.tsx).
+- Data shapes: keep additions aligned with interfaces in [src/types.ts](src/types.ts); when expanding Firestore docs, update both types and `firestoreService` mappers.
+- Security: admin auth handled client-side; avoid exposing sensitive keys beyond existing public Firebase config; keep `adminLogin` in `exchangeService` unused (throws by design).

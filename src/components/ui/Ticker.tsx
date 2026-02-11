@@ -1,7 +1,21 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import type { ExchangeRates } from '../../types';
 
-const Ticker: React.FC = () => {
+interface Props {
+    rates: ExchangeRates;
+}
+
+const Ticker: React.FC<Props> = ({ rates }) => {
+    // Get rates from Firebase, with fallbacks
+    const tickerItems = [
+        { code: 'USD', name: 'GBP/USD', rate: rates?.USD?.customerBuys || 1.31 },
+        { code: 'EUR', name: 'GBP/EUR', rate: rates?.EUR?.customerBuys || 1.18 },
+        { code: 'AUD', name: 'GBP/AUD', rate: rates?.AUD?.customerBuys || 1.88 },
+        { code: 'AED', name: 'GBP/AED', rate: rates?.AED?.customerBuys || 4.58 },
+        { code: 'THB', name: 'GBP/THB', rate: rates?.THB?.customerBuys || 43.5 },
+    ];
+
     return (
         <div className="bg-brand-blue text-white overflow-hidden py-2 relative z-20">
             <div className="flex whitespace-nowrap">
@@ -12,11 +26,14 @@ const Ticker: React.FC = () => {
                 >
                     {[...Array(4)].map((_, i) => (
                         <React.Fragment key={i}>
-                            <span className="flex items-center"><span className="text-green-400 mr-2">▲</span> GBP/USD 1.2500</span>
-                            <span className="flex items-center"><span className="text-red-400 mr-2">▼</span> GBP/EUR 1.1550</span>
-                            <span className="flex items-center"><span className="text-green-400 mr-2">▲</span> GBP/AUD 1.8850</span>
-                            <span className="flex items-center"><span className="text-green-400 mr-2">▲</span> GBP/AED 4.5800</span>
-                            <span className="flex items-center"><span className="text-red-400 mr-2">▼</span> GBP/THB 43.500</span>
+                            {tickerItems.map((item, idx) => (
+                                <span key={`${i}-${item.code}`} className="flex items-center">
+                                    <span className={`mr-2 ${idx % 2 === 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                        {idx % 2 === 0 ? '▲' : '▼'}
+                                    </span>
+                                    {item.name} {item.rate.toFixed(4)}
+                                </span>
+                            ))}
                             <span className="text-brand-yellow font-bold">★ 0% Commission on ALL exchanges ★</span>
                             <span className="text-white font-semibold">Best rates guaranteed in West London</span>
                         </React.Fragment>

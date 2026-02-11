@@ -1,1 +1,17 @@
-{ "projects": { "default": "ealing-exchange-484820" } }
+{
+  "projects": {
+    "default": "sys-34584539868966162311959642"
+  },
+  "targets": {
+    "sys-34584539868966162311959642": {
+      "hosting": {
+        "ealing-exchange": [
+          "sys-34584539868966162311959642"
+        ],
+        "umrah": [
+          "umrah-traveltimeglobal"
+        ]
+      }
+    }
+  }
+}

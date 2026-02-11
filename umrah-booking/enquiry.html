@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Umrah Enquiry Form | Travel Time Global</title>
+    <meta name="description"
+        content="Submit your custom Umrah enquiry. Tell us your requirements and we'll create a personalized package.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand': { 'emerald': '#059669', 'gold': '#D4AF37', 'dark': '#064E3B' }
+                    },
+                    fontFamily: { 'sans': ['Inter', 'system-ui', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="font-sans bg-slate-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <span class="text-2xl">🕌</span>
+                <span class="text-xl font-bold text-brand-dark">Travel Time Global</span>
+            </a>
+            <div class="hidden md:flex items-center gap-6">
+                <a href="index.html" class="text-slate-700 hover:text-brand-emerald font-medium">Home</a>
+                <a href="packages.html" class="text-slate-700 hover:text-brand-emerald font-medium">Packages</a>
+                <a href="quote.html" class="text-slate-700 hover:text-brand-emerald font-medium">Instant Quote</a>
+                <a href="enquiry.html" class="text-brand-emerald font-bold">Enquiry Form</a>
+                <a href="faq.html" class="text-slate-700 hover:text-brand-emerald font-medium">FAQ</a>
+                <a href="contact.html" class="text-slate-700 hover:text-brand-emerald font-medium">Contact</a>
+            </div>
+            <button onclick="toggleMobileMenu()" class="md:hidden text-2xl">☰</button>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t px-4 py-4 space-y-3">
+            <a href="index.html" class="block py-2 text-slate-700 font-medium">Home</a>
+            <a href="packages.html" class="block py-2 text-slate-700 font-medium">Packages</a>
+            <a href="quote.html" class="block py-2 text-slate-700 font-medium">Instant Quote</a>
+            <a href="enquiry.html" class="block py-2 text-brand-emerald font-bold">Enquiry Form</a>
+            <a href="faq.html" class="block py-2 text-slate-700 font-medium">FAQ</a>
+            <a href="contact.html" class="block py-2 text-slate-700 font-medium">Contact</a>
+            <a href="tel:07597635092" class="block py-2 text-brand-emerald font-bold">📞 07597 635 092</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="bg-gradient-to-r from-brand-dark via-brand-emerald to-emerald-500 text-white py-12 text-center">
+        <h1 class="text-3xl md:text-4xl font-bold mb-2">📝 Custom Umrah Enquiry</h1>
+        <p class="text-emerald-100 text-lg">Tell us exactly what you need - we'll create a tailored package</p>
+    </div>
+
+    <!-- Form -->
+    <div class="max-w-3xl mx-auto px-4 py-12">
+        <div class="bg-white rounded-2xl shadow-lg p-8" id="formContainer">
+            <!-- Personal Details -->
+            <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span
+                    class="w-8 h-8 bg-brand-emerald text-white rounded-full flex items-center justify-center text-sm font-bold">1</span>
+                Personal Details
+            </h2>
+            <div class="grid md:grid-cols-2 gap-4 mb-8">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Full Name *</label>
+                    <input type="text" id="name" required
+                        class="w-full px-4 py-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-brand-emerald focus:border-brand-emerald"
+                        placeholder="Your full name">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Phone Number *</label>
+                    <input type="tel" id="phone" required class="w-full px-4 py-3 border border-slate-300 rounded-xl"
+                        placeholder="07XXX XXXXXX">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Email Address *</label>
+                    <input type="email" id="email" required class="w-full px-4 py-3 border border-slate-300 rounded-xl"
+                        placeholder="your@email.com">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Postcode</label>
+                    <input type="text" id="postcode" class="w-full px-4 py-3 border border-slate-300 rounded-xl"
+                        placeholder="W13 XXX">
+                </div>
+            </div>
+
+            <!-- Travel Preferences -->
+            <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span
+                    class="w-8 h-8 bg-brand-emerald text-white rounded-full flex items-center justify-center text-sm font-bold">2</span>
+                Travel Preferences
+            </h2>
+            <div class="grid md:grid-cols-2 gap-4 mb-8">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Preferred Departure Date *</label>
+                    <input type="date" id="departDate" required
+                        class="w-full px-4 py-3 border border-slate-300 rounded-xl">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">How flexible are your dates?</label>
+                    <select id="flexibility" class="w-full px-4 py-3 border border-slate-300 rounded-xl">
+                        <option value="exact">Exact dates only</option>
+                        <option value="1-week" selected>+/- 1 week</option>
+                        <option value="2-weeks">+/- 2 weeks</option>
+                        <option value="flexible">Very flexible</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Trip Duration</label>
+                    <select id="duration" class="w-full px-4 py-3 border border-slate-300 rounded-xl">
+                        <option value="7">7 nights</option>
+                        <option value="10" selected>10 nights</option>
+                        <option value="14">14 nights</option>
+                        <option value="custom">Custom duration</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Departure Airport</label>
+                    <select id="airport" class="w-full px-4 py-3 border border-slate-300 rounded-xl">
+                        <option value="LHR" selected>London Heathrow</option>
+                        <option value="LGW">London Gatwick</option>
+                        <option value="STN">London Stansted</option>
+                        <option value="MAN">Manchester</option>
+                        <option value="BHX">Birmingham</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Travellers -->
+            <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span
+                    class="w-8 h-8 bg-brand-emerald text-white rounded-full flex items-center justify-center text-sm font-bold">3</span>
+                Travellers
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Adults (16+)</label>
+                    <input type="number" id="adults" value="2" min="1" max="20"
+                        class="w-full px-4 py-3 border border-slate-300 rounded-xl text-center">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Youth (12-15)</label>
+                    <input type="number" id="youth" value="0" min="0" max="10"
+                        class="w-full px-4 py-3 border border-slate-300 rounded-xl text-center">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Children (2-11)</label>
+                    <input type="number" id="children" value="0" min="0" max="10"
+                        class="w-full px-4 py-3 border border-slate-300 rounded-xl text-center">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Infants (&lt;2)</label>
+                    <input type="number" id="infants" value="0" min="0" max="5"
+                        class="w-full px-4 py-3 border border-slate-300 rounded-xl text-center">
+                </div>
+            </div>
+
+            <!-- Accommodation -->
+            <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span
+                    class="w-8 h-8 bg-brand-emerald text-white rounded-full flex items-center justify-center text-sm font-bold">4</span>
+                Accommodation Preferences
+            </h2>
+            <div class="grid md:grid-cols-2 gap-4 mb-8">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Hotel Star Rating *</label>
+                    <select id="hotelStar" required class="w-full px-4 py-3 border border-slate-300 rounded-xl">
+                        <option value="3-star">3★ Economy (from £899)</option>
+                        <option value="4-star" selected>4★ Comfort (from £1,099)</option>
+                        <option value="5-star">5★ Premium (from £1,475)</option>
+                        <option value="any">No preference</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Room Sharing</label>
+                    <select id="roomSharing" class="w-full px-4 py-3 border border-slate-300 rounded-xl">
+                        <option value="quad">Quad Sharing</option>
+                        <option value="triple">Triple Sharing</option>
+                        <option value="double" selected>Double Sharing</option>
+                        <option value="single">Single Room</option>
+                    </select>
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Specific Hotel Requests
+                        (Optional)</label>
+                    <input type="text" id="hotelRequest" class="w-full px-4 py-3 border border-slate-300 rounded-xl"
+                        placeholder="e.g., Hilton Suites Makkah, or 'as close to Haram as possible'">
+                </div>
+            </div>
+
+            <!-- Itinerary -->
+            <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span
+                    class="w-8 h-8 bg-brand-emerald text-white rounded-full flex items-center justify-center text-sm font-bold">5</span>
+                Itinerary
+            </h2>
+            <div class="grid md:grid-cols-2 gap-4 mb-8">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Start City</label>
+                    <select id="startCity" class="w-full px-4 py-3 border border-slate-300 rounded-xl">
+                        <option value="makkah" selected>Makkah First</option>
+                        <option value="madinah">Madinah First</option>
+                        <option value="no-preference">No Preference</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1">Include Ziyarah Tours?</label>
+                    <select id="ziyarah" class="w-full px-4 py-3 border border-slate-300 rounded-xl">
+                        <option value="yes" selected>Yes, please</option>
+                        <option value="no">No, thank you</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Additional Notes -->
+            <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <span
+                    class="w-8 h-8 bg-brand-emerald text-white rounded-full flex items-center justify-center text-sm font-bold">6</span>
+                Additional Information
+            </h2>
+            <div class="mb-8">
+                <label class="block text-sm font-medium text-slate-700 mb-1">Special Requirements or Notes</label>
+                <textarea id="notes" rows="4" class="w-full px-4 py-3 border border-slate-300 rounded-xl"
+                    placeholder="e.g., wheelchair access, dietary requirements, connecting rooms, budget constraints, etc."></textarea>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-slate-700 mb-1">How did you hear about us?</label>
+                <select id="source" class="w-full px-4 py-3 border border-slate-300 rounded-xl">
+                    <option value="">-- Please select --</option>
+                    <option value="google">Google Search</option>
+                    <option value="friend">Friend/Family</option>
+                    <option value="social">Social Media</option>
+                    <option value="ealing-exchange">Ealing Exchange</option>
+                    <option value="mosque">Mosque/Community</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <!-- Submit -->
+            <button onclick="submitEnquiry()" id="submitBtn"
+                class="w-full py-4 bg-gradient-to-r from-brand-emerald to-emerald-600 text-white rounded-xl font-bold text-lg hover:from-emerald-700 hover:to-emerald-700 transition-all">
+                📨 Submit Enquiry
+            </button>
+            <p class="text-center text-xs text-slate-500 mt-4">
+                We'll respond within 24 hours with a personalized quote. ATOL Protected.
+            </p>
+        </div>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="bg-white rounded-2xl shadow-lg p-8 text-center hidden">
+            <div class="text-6xl mb-4">✅</div>
+            <h2 class="text-2xl font-bold text-slate-800 mb-2">Enquiry Received!</h2>
+            <p class="text-slate-600 mb-6">JazakAllah Khair for your enquiry. Our team will review your requirements and
+                contact you within 24 hours with a personalized quote.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://wa.me/447597635092"
+                    class="px-6 py-3 bg-green-500 text-white rounded-xl font-bold hover:bg-green-600">💬 WhatsApp Us
+                    Now</a>
+                <a href="index.html"
+                    class="px-6 py-3 border-2 border-slate-300 text-slate-700 rounded-xl font-bold hover:bg-slate-50">←
+                    Back to Home</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-300 py-8 text-center">
+        <p>© 2026 Travel Time Global. ATOL Protected. <a href="tel:07597635092" class="text-white hover:underline">07597
+                635 092</a></p>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getFirestore, collection, addDoc, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBL2NVY-kDF0kIUaZoLL_ERf5YN-hthxko",
+            authDomain: "sys-34584539868966162311959642.firebaseapp.com",
+            projectId: "sys-34584539868966162311959642"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        window.submitEnquiry = async function () {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+
+            if (!name || !phone || !email) {
+                alert('Please fill in all required fields (Name, Phone, Email)');
+                return;
+            }
+
+            document.getElementById('submitBtn').textContent = 'Submitting...';
+            document.getElementById('submitBtn').disabled = true;
+
+            try {
+                await addDoc(collection(db, 'umrah_enquiries'), {
+                    name: name,
+                    phone: phone,
+                    email: email,
+                    postcode: document.getElementById('postcode').value || '',
+                    departure_date: document.getElementById('departDate').value,
+                    flexibility: document.getElementById('flexibility').value,
+                    duration: document.getElementById('duration').value,
+                    airport: document.getElementById('airport').value,
+                    adults: parseInt(document.getElementById('adults').value),
+                    youth: parseInt(document.getElementById('youth').value),
+                    children: parseInt(document.getElementById('children').value),
+                    infants: parseInt(document.getElementById('infants').value),
+                    hotel_star: document.getElementById('hotelStar').value,
+                    room_sharing: document.getElementById('roomSharing').value,
+                    hotel_request: document.getElementById('hotelRequest').value || '',
+                    start_city: document.getElementById('startCity').value,
+                    ziyarah: document.getElementById('ziyarah').value,
+                    notes: document.getElementById('notes').value || '',
+                    referral_source: document.getElementById('source').value || '',
+                    source: 'manual_enquiry',
+                    status: 'new',
+                    created_at: serverTimestamp()
+                });
+                document.getElementById('formContainer').classList.add('hidden');
+                document.getElementById('successMessage').classList.remove('hidden');
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Submitted! We will contact you soon.');
+                document.getElementById('formContainer').classList.add('hidden');
+                document.getElementById('successMessage').classList.remove('hidden');
+            }
+        };
+    </script>
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+    </script>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/447597635092?text=Hi!%20I'm%20interested%20in%20Umrah%20packages"
+        class="fixed bottom-6 right-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 hover:scale-110 transition-all duration-300 flex items-center justify-center"
+        target="_blank" rel="noopener">
+        <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
+            <path
+                d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+        </svg>
+    </a>
+</body>
+
+</html>
