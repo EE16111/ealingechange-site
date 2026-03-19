@@ -9,7 +9,7 @@ export const blogPosts: BlogPost[] = [
         author: 'Ealing Exchange Team',
         date: '2024-08-05',
         category: 'Guides',
-        imageUrl: 'https://images.unsplash.com/photo-1526721991392-38507c1b3def?q=80&w=2940&auto=format&fit=crop',
+        imageUrl: 'https://images.unsplash.com/photo-1580519542036-c47de6196ba5?q=80&w=2942&auto=format&fit=crop',
         content: `
 <p>Navigating the world of currency exchange for the first time can feel daunting. With different rates, fees, and providers, how do you know you're getting a good deal? This guide will walk you through the basics, empowering you to exchange money with confidence.</p>
 <h3>Understanding the Exchange Rate</h3>
@@ -37,7 +37,7 @@ export const blogPosts: BlogPost[] = [
         author: 'Ealing Exchange Team',
         date: '2024-08-02',
         category: 'Travel Tips',
-        imageUrl: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?q=80&w=2940&auto=format&fit=crop',
+        imageUrl: 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?q=80&w=2940&auto=format&fit=crop',
         content: `
 <p>Every penny counts when you're travelling. Securing a great exchange rate means more money for souvenirs, meals, and unforgettable experiences. Here are our top five tips for making your money go further.</p>
 <ol>
@@ -56,7 +56,7 @@ export const blogPosts: BlogPost[] = [
         author: 'Ealing Exchange Team',
         date: '2024-07-29',
         category: 'Finance',
-        imageUrl: 'https://images.unsplash.com/photo-1559526324-c1f275fbfa32?q=80&w=2940&auto=format&fit=crop',
+        imageUrl: 'https://images.unsplash.com/photo-1601597111158-2fcee29a4a04?q=80&w=2940&auto=format&fit=crop',
         content: `
 <p>When you're looking for the best deal on travel money, it's easy to get lost in a sea of numbers, fees, and special offers. How do you cut through the noise and find the right price? It's all about knowing what to look for.</p>
 <h3>The Myth of the "Best Rate"</h3>
@@ -83,7 +83,7 @@ export const blogPosts: BlogPost[] = [
         author: 'Ealing Exchange Team',
         date: '2024-07-25',
         category: 'Budgeting',
-        imageUrl: 'https://images.unsplash.com/photo-1517845943483-8a1a45a31a54?q=80&w=2940&auto=format&fit=crop',
+        imageUrl: 'https://images.unsplash.com/photo-1454165833767-027ffea702BE?q=80&w=2940&auto=format&fit=crop',
         content: `
 <p>A well-planned budget is the foundation of a stress-free holiday. Knowing how much you're likely to spend allows you to relax and enjoy your trip without worrying about running out of money. Here’s how to plan your budget like a pro.</p>
 <h3>Step 1: Account for Pre-Trip Fixed Costs</h3>
@@ -114,7 +114,7 @@ export const blogPosts: BlogPost[] = [
         author: 'Ealing Exchange Team',
         date: '2024-07-22',
         category: 'Services',
-        imageUrl: 'https://images.unsplash.com/photo-1614028674026-a0a1434c4554?q=80&w=2940&auto=format&fit=crop',
+        imageUrl: 'https://images.unsplash.com/photo-1540331547168-8b63109225b7?q=80&w=2942&auto=format&fit=crop',
         content: `
 <p>When you travel, managing your money effectively is key. The two main choices are carrying physical cash or relying on cards. Both have their advantages and disadvantages. Let's break them down.</p>
 <h3>The Case for Carrying Cash</h3>
@@ -190,7 +190,7 @@ export const blogPosts: BlogPost[] = [
         author: 'Ealing Exchange Team',
         date: '2024-08-15',
         category: 'Travel Tips',
-        imageUrl: 'https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?q=80&w=2787&auto=format&fit=crop',
+        imageUrl: 'https://images.unsplash.com/photo-1526614187127-d21827ed74a2?q=80&w=2870&auto=format&fit=crop',
         content: `
 <p>In a world of contactless payments and digital wallets, is there still a place for physical cash when you travel? The answer is a resounding yes. The smartest travel money strategy involves using both cash and cards to your advantage.</p>
 <h3>The Power of Cash</h3>

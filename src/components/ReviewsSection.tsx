@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FadeIn, StaggerContainer } from './ui/Motion';
 import StarIcon from './icons/StarIcon';
@@ -62,6 +62,50 @@ const reviews = [
 ];
 
 const ReviewsSection: React.FC = () => {
+    useEffect(() => {
+        // @ts-ignore
+        if (!window.L) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+            document.head.appendChild(link);
+
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+            script.async = true;
+            script.onload = () => initMaps();
+            document.body.appendChild(script);
+        } else {
+            initMaps();
+        }
+
+        function initMaps() {
+            const westEalingContainer = document.getElementById('map-west-ealing');
+            if (westEalingContainer && !westEalingContainer.innerHTML) {
+                // @ts-ignore
+                const map = window.L.map('map-west-ealing').setView([51.5126, -0.3225], 15);
+                // @ts-ignore
+                window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+                // @ts-ignore
+                window.L.marker([51.5126, -0.3225]).addTo(map).bindPopup('<b>West Ealing Branch</b>').openPopup();
+            }
+
+            const hanwellContainer = document.getElementById('map-hanwell');
+            if (hanwellContainer && !hanwellContainer.innerHTML) {
+                // @ts-ignore
+                const map = window.L.map('map-hanwell').setView([51.5074, -0.3396], 15);
+                // @ts-ignore
+                window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(map);
+                // @ts-ignore
+                window.L.marker([51.5074, -0.3396]).addTo(map).bindPopup('<b>Hanwell Branch</b>').openPopup();
+            }
+        }
+    }, []);
+
     return (
         <section className="py-16 bg-white relative overflow-hidden">
             {/* Decorative background elements */}
@@ -146,38 +190,16 @@ const ReviewsSection: React.FC = () => {
                             {/* West Ealing Branch */}
                             <div>
                                 <h4 className="font-semibold text-slate-700 mb-2 text-center">West Ealing Branch</h4>
-                                <div className="rounded-xl overflow-hidden shadow-md h-72">
-                                    <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1888.210659816967!2d-0.322891288742646!3d51.510897971696565!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48760d865cc07bb7%3A0xf264ea993783acdc!2sEaling%20Exchange!5e1!3m2!1sen!2suk!4v1768862211901!5m2!1sen!2suk"
-                                        width="100%"
-                                        height="100%"
-                                        style={{ border: 0 }}
-                                        allowFullScreen
-                                        loading="lazy"
-                                        referrerPolicy="no-referrer-when-downgrade"
-                                        title="Ealing Exchange West Ealing"
-                                    ></iframe>
-                                </div>
+                                <div className="rounded-xl overflow-hidden shadow-md h-72 z-0" id="map-west-ealing"></div>
                             </div>
                             {/* Hanwell Branch */}
                             <div>
                                 <h4 className="font-semibold text-slate-700 mb-2 text-center">Hanwell Branch</h4>
-                                <div className="rounded-xl overflow-hidden shadow-md h-72">
-                                    <iframe
-                                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1888.2943523937474!2d-0.33875178874278045!3d51.50887867169607!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48760d55f28a99c3%3A0xa7100a882dbf98cc!2sEaling%20Exchange!5e1!3m2!1sen!2suk!4v1768862262959!5m2!1sen!2suk"
-                                        width="100%"
-                                        height="100%"
-                                        style={{ border: 0 }}
-                                        allowFullScreen
-                                        loading="lazy"
-                                        referrerPolicy="no-referrer-when-downgrade"
-                                        title="Ealing Exchange Hanwell"
-                                    ></iframe>
-                                </div>
+                                <div className="rounded-xl overflow-hidden shadow-md h-72 z-0" id="map-hanwell"></div>
                             </div>
                         </div>
                         <p className="text-center text-slate-500 text-sm mt-4">
-                            Click on a map to see our reviews and get directions
+                            Click on a map for larger view and directions
                         </p>
                     </div>
                 </FadeIn>

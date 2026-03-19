@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import type { Store } from '../../types';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon';
 import Card from '../ui/Card';
@@ -8,32 +8,53 @@ interface PageProps {
     onNavigate: (path: string) => void;
 }
 
-
-
-interface PageProps {
-    stores: Store[];
-    onNavigate: (path: string) => void;
-}
-
 const ContactPage: React.FC<PageProps> = ({ stores, onNavigate }) => {
+    const mapRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+
+    useEffect(() => {
+        // Load Leaflet from CDN if not already loaded
+        // @ts-ignore
+        if (!window.L) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+            document.head.appendChild(link);
+
+            const script = document.createElement('script');
+            script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+            script.async = true;
+            script.onload = () => initMaps();
+            document.body.appendChild(script);
+        } else {
+            initMaps();
+        }
+
+        function initMaps() {
+            stores.forEach(store => {
+                const container = mapRefs.current[store.store_id];
+                if (container && !container.innerHTML) {
+                    const lat = store.name.toLowerCase().includes('west ealing') ? 51.5126 : 51.5074;
+                    const lng = store.name.toLowerCase().includes('west ealing') ? -0.3225 : -0.3396;
+                    
+                    const map = window.L.map(container).setView([lat, lng], 15);
+                    window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap contributors'
+                    }).addTo(map);
+
+                    window.L.marker([lat, lng]).addTo(map)
+                        .bindPopup(`<b>${store.name}</b><br>${store.address}`)
+                        .openPopup();
+                }
+            });
+        }
+    }, [stores]);
+
     const formatTel = (phone: string) => {
         if (!phone) return '';
         if (phone.startsWith('0')) {
             return `+44${phone.substring(1)}`.replace(/\s/g, '');
         }
         return phone.replace(/\s/g, '');
-    };
-
-    const getMapEmbedUrl = (storeName: string) => {
-        // Use Google Maps Embed API (free tier/no-key logic for direct search queries if possible, but specific embeds are safer)
-        // Since we don't have a backend returning embeds, we hardcode based on known branches.
-        if (storeName.toLowerCase().includes('west ealing')) {
-            return "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.2863773199856!2d-0.3225888233764848!3d51.51261397181467!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x487612fd1742461d%3A0x6b00e37160759f2e!2s16%20The%20Broadway%2C%20London%20W13%200SR!5e0!3m2!1sen!2suk!4v1705600000000!5m2!1sen!2suk";
-        }
-        if (storeName.toLowerCase().includes('hanwell')) {
-            return "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.567822607997!2d-0.3396783233767891!3d51.50744997181358!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4876131b0a827461%3A0xe5452d24276182!2s111%20Uxbridge%20Rd%2C%20London%20W7%203ST!5e0!3m2!1sen!2suk!4v1705600000000!5m2!1sen!2suk";
-        }
-        return "";
     };
 
     return (
@@ -47,7 +68,6 @@ const ContactPage: React.FC<PageProps> = ({ stores, onNavigate }) => {
 
             <div className="space-y-12">
                 {stores.map(store => {
-                    const embedUrl = getMapEmbedUrl(store.name);
                     return (
                         <div key={store.store_id} className="bg-slate-50 rounded-xl overflow-hidden border border-slate-200 shadow-sm flex flex-col md:flex-row">
                             <div className="p-8 md:w-1/3 flex flex-col justify-center">
@@ -71,20 +91,12 @@ const ContactPage: React.FC<PageProps> = ({ stores, onNavigate }) => {
                                     </p>
                                 </div>
                             </div>
-                            {embedUrl && (
-                                <div className="md:w-2/3 bg-slate-200 min-h-[300px]">
-                                    <iframe
-                                        src={embedUrl}
-                                        width="100%"
-                                        height="100%"
-                                        style={{ border: 0, minHeight: '300px' }}
-                                        allowFullScreen
-                                        loading="lazy"
-                                        referrerPolicy="no-referrer-when-downgrade"
-                                        title={`Map of ${store.name}`}
-                                    ></iframe>
-                                </div>
-                            )}
+                            <div 
+                                className="md:w-2/3 bg-slate-200 min-h-[300px] z-0" 
+                                ref={el => mapRefs.current[store.store_id] = el}
+                            >
+                                {/* Map loads here */}
+                            </div>
                         </div>
                     );
                 })}
