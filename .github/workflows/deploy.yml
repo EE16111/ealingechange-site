@@ -33,8 +33,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/ealing-exchange-app:latest
-            ghcr.io/${{ github.repository }}/ealing-exchange-app:${{ github.sha }}
+            ghcr.io/tekrenewed/ealing-exchange-app:latest
+            ghcr.io/tekrenewed/ealing-exchange-app:${{ github.sha }}
 
   deploy:
     name: Build & Deploy to Firebase
