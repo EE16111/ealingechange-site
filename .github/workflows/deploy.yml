@@ -39,10 +39,19 @@ jobs:
   deploy:
     name: Build & Deploy to Firebase
     runs-on: ubuntu-latest
-    needs: [build-and-push-ghcr] # Ensure build passes before deploy if you wish
+    needs: [build-and-push-ghcr]
+    permissions:
+      contents: read
+      id-token: write # Required for OIDC
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
+
+      - name: Google Auth
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: 'projects/286893104325/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+          service_account: 'github-actions-deployer@ealing-exchange-484820.iam.gserviceaccount.com'
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -59,5 +68,3 @@ jobs:
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
-        env:
-          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
