@@ -39,3 +39,11 @@ coverage/
 # Cache
 .cache/
 .eslintcache
+
+# Secrets
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!firebase.json
+!.firebaserc
