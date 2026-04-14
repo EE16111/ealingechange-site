@@ -112,10 +112,10 @@ const ContactPage: React.FC<PageProps> = ({ stores, onNavigate }) => {
                 <h3 className="text-xl font-bold text-brand-blue mb-2">Need help?</h3>
                 <p className="text-slate-600 mb-6">Our team is available to answer any questions about your currency needs.</p>
                 <div className="flex justify-center space-x-4">
-                    <button className="bg-brand-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-slate-700 transition-colors">
+                    <a href="mailto:info@ealingexchange.co.uk" className="bg-brand-blue text-white font-bold py-2 px-6 rounded-lg hover:bg-slate-700 transition-colors inline-block">
                         Email Us
-                    </button>
-                    <button onClick={() => window.open('https://wa.me/447000000000', '_blank')} className="bg-[#25D366] text-white font-bold py-2 px-6 rounded-lg hover:bg-green-600 transition-colors flex items-center">
+                    </a>
+                    <button onClick={() => window.open('https://wa.me/447597635092', '_blank')} className="bg-[#25D366] text-white font-bold py-2 px-6 rounded-lg hover:bg-green-600 transition-colors flex items-center">
                         WhatsApp
                     </button>
                 </div>

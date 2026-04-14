@@ -1,5 +1,6 @@
 import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { getExchangeData, IS_MOCK_MODE } from './services/exchangeService';
+import { onAuthChange, firebaseLogout } from './services/firebase';
 import type { AppData, AdminUser, Currency } from './types';
 import { CalculatorMode } from './types';
 import Header from './components/Header';
@@ -32,11 +33,7 @@ const App: React.FC = () => {
   const [path, setPath] = useState(window.location.pathname);
   const [calculatorMode, setCalculatorMode] = useState<CalculatorMode>(CalculatorMode.BUY_FOREIGN);
   const [selectedCurrencyForCalc, setSelectedCurrencyForCalc] = useState<string>('');
-  const [adminUser, setAdminUser] = useState<AdminUser | null>(() => {
-    // Restore admin session from localStorage
-    const saved = localStorage.getItem('adminUser');
-    return saved ? JSON.parse(saved) : null;
-  });
+  const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
   const [showAdminLogin, setShowAdminLogin] = useState<boolean>(false);
 
   const handlePopState = () => {
@@ -48,6 +45,26 @@ const App: React.FC = () => {
     return () => {
       window.removeEventListener('popstate', handlePopState);
     };
+  }, []);
+
+  // Verify admin session via Firebase Auth (not localStorage)
+  useEffect(() => {
+    const unsubscribe = onAuthChange((firebaseUser) => {
+      if (firebaseUser) {
+        setAdminUser({
+          email: firebaseUser.email || '',
+          name: firebaseUser.displayName || 'Admin User',
+          role: 'Admin'
+        });
+      } else {
+        setAdminUser(null);
+        if (path === '/admin') {
+          setPath('/');
+          window.history.pushState({}, '', '/');
+        }
+      }
+    });
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {
@@ -101,15 +118,14 @@ const App: React.FC = () => {
 
   const handleAdminLoginSuccess = (user: AdminUser) => {
     setAdminUser(user);
-    localStorage.setItem('adminUser', JSON.stringify(user)); // Persist session
     setShowAdminLogin(false);
     setPath('/admin');
     window.history.pushState({}, '', '/admin');
   }
 
-  const handleAdminLogout = () => {
+  const handleAdminLogout = async () => {
+    await firebaseLogout();
     setAdminUser(null);
-    localStorage.removeItem('adminUser'); // Clear session
     setPath('/');
     window.history.pushState({}, '', '/');
   }
