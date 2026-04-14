@@ -65,6 +65,6 @@ jobs:
         run: npm run build
 
       - name: Deploy to Firebase
-        run: npx firebase-tools deploy --only hosting:ealing-exchange --project ealing-exchange-484820 --non-interactive --debug
+        run: npx firebase-tools deploy --only hosting:ealing-exchange --project ealing-exchange-484820 --non-interactive
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
