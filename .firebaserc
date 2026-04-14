@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "ealing-exchange-484820"
+  },
+  "targets": {
+    "ealing-exchange-484820": {
+      "hosting": {
+        "ealing-exchange": [
+          "ealing-exchange-484820"
+        ]
+      }
+    }
+  }
+}
