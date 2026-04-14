@@ -2,29 +2,44 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { CalculatorMode } from '../types';
 
 /**
- * Service Function Tests
+ * Service Layer Tests
  * 
- * Tests for the API service layer.
- * Note: These tests verify the mock data structure since IS_MOCK_MODE may be on or off.
+ * Mocks the Firestore layer so tests don't make real network calls.
  */
 
-// We need to set mock mode for these tests
-vi.mock('../services/exchangeService', async (importOriginal) => {
-    const mod = await importOriginal<typeof import('../services/exchangeService')>();
-    return {
-        ...mod,
-        IS_MOCK_MODE: true, // Force mock mode for tests
-    };
-});
+vi.mock('../services/firestoreService', () => ({
+    getExchangeDataFromFirestore: vi.fn().mockResolvedValue({
+        currencies: [
+            { code: 'EUR', name: 'Euro', symbol: '€', decimal_places: 2, flag_emoji: '🇪🇺', is_active: true, display_order: 1 },
+            { code: 'USD', name: 'US Dollar', symbol: '$', decimal_places: 2, flag_emoji: '🇺🇸', is_active: true, display_order: 2 },
+        ],
+        rates: {
+            EUR: { customerBuys: 1.18, customerSells: 1.10 },
+            USD: { customerBuys: 1.25, customerSells: 1.15 },
+        },
+        stores: [
+            { store_id: 1, name: 'West Ealing', address: '16 The Broadway', phone: '020 8840 6420', map_url: '' },
+        ],
+        siteSettings: {},
+    }),
+    createOrderInFirestore: vi.fn().mockResolvedValue({ success: true, orderId: 'mock-order-id-123' }),
+    createRateAlertInFirestore: vi.fn().mockResolvedValue({ success: true }),
+    addSubscriberToFirestore: vi.fn().mockResolvedValue({ success: true }),
+    createLeadInFirestore: vi.fn().mockResolvedValue({ success: true }),
+    updateRatesInFirestore: vi.fn().mockResolvedValue(undefined),
+    updateStoresInFirestore: vi.fn().mockResolvedValue(undefined),
+    updateSiteSettingsInFirestore: vi.fn().mockResolvedValue(undefined),
+    getAdminDataFromFirestore: vi.fn().mockResolvedValue({ dashboard: {}, recentOrders: [], customers: [] }),
+    updateOrderStatusInFirestore: vi.fn().mockResolvedValue(undefined),
+}));
 
-describe('Exchange Service (Mock Mode)', () => {
+describe('Exchange Service', () => {
     beforeEach(() => {
         vi.clearAllMocks();
     });
 
     describe('getExchangeData', () => {
         it('should return AppData structure with currencies, rates, and stores', async () => {
-            // Dynamic import after mocking
             const { getExchangeData } = await import('../services/exchangeService');
             const data = await getExchangeData();
 
@@ -35,7 +50,7 @@ describe('Exchange Service (Mock Mode)', () => {
             expect(data.currencies.length).toBeGreaterThan(0);
         });
 
-        it('should include GBP in currencies list', async () => {
+        it('should include GBP in currencies list (added automatically)', async () => {
             const { getExchangeData } = await import('../services/exchangeService');
             const data = await getExchangeData();
             const gbp = data.currencies.find(c => c.code === 'GBP');
@@ -48,7 +63,7 @@ describe('Exchange Service (Mock Mode)', () => {
             const { getExchangeData } = await import('../services/exchangeService');
             const data = await getExchangeData();
 
-            Object.entries(data.rates).forEach(([_code, rate]) => {
+            Object.entries(data.rates).forEach(([, rate]) => {
                 expect(rate).toHaveProperty('customerBuys');
                 expect(rate).toHaveProperty('customerSells');
                 expect(typeof rate.customerBuys).toBe('number');
@@ -77,6 +92,23 @@ describe('Exchange Service (Mock Mode)', () => {
 
             expect(result).toHaveProperty('success');
             expect(result.success).toBe(true);
+        });
+
+        it('should include orderId in successful response', async () => {
+            const { createOrder } = await import('../services/exchangeService');
+            const result = await createOrder({
+                mode: CalculatorMode.BUY_FOREIGN,
+                name: 'Jane Doe',
+                email: 'jane@example.com',
+                phone: '07987654321',
+                branch: 'Hanwell',
+                baseAmount: '500',
+                quoteAmount: '585',
+                currencyCode: 'EUR'
+            });
+
+            expect(result.orderId).toBeDefined();
+            expect(typeof result.orderId).toBe('string');
         });
     });
 

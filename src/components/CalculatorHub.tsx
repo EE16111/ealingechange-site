@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import type { Currency, ExchangeRates, Store, CalculatorMode, BookingData } from '../types';
+import type { Currency, ExchangeRates, Store, BookingData } from '../types';
+import { CalculatorMode } from '../types';
 import ArrowRightIcon from './icons/ArrowRightIcon';
-import CheckBadgeIcon from './icons/CheckBadgeIcon'; // Assuming we can use this icon or similar
+import CheckBadgeIcon from './icons/CheckBadgeIcon';
 import { createOrder } from '../services/exchangeService';
 import Spinner from './ui/Spinner';
+import { calculateConversion } from '../utils/calculationUtils';
 
 interface Props {
     currencies: Currency[];
@@ -38,20 +40,24 @@ const CalculatorHub: React.FC<Props> = ({ currencies, rates, stores, mode, setMo
     useEffect(() => {
         if (!activeCurrency || !rates[activeCurrency.code]) return;
 
-        const rateObj = rates[activeCurrency.code];
-        const rate = mode === 'BUY_FOREIGN' ? rateObj.customerBuys : rateObj.customerSells;
-        setRateUsed(rate);
+        const conversion = calculateConversion(
+            parseFloat(amount.replace(/,/g, '')) || 0,
+            activeCurrency.code,
+            mode,
+            rates
+        );
 
-        const val = parseFloat(amount.replace(/,/g, '')) || 0;
-        let result = 0;
-        if (mode === 'BUY_FOREIGN') {
-            result = val * rate;
+        if (conversion) {
+            setRateUsed(conversion.rate);
+            const decimals = mode === CalculatorMode.BUY_FOREIGN ? activeCurrency.decimal_places : 2;
+            setConvertedAmount(conversion.result.toLocaleString(undefined, {
+                minimumFractionDigits: decimals,
+                maximumFractionDigits: decimals
+            }));
         } else {
-            result = val / rate;
+            setConvertedAmount('0.00');
+            setRateUsed(0);
         }
-
-        const decimals = mode === 'BUY_FOREIGN' ? activeCurrency.decimal_places : 2;
-        setConvertedAmount(result.toLocaleString(undefined, { minimumFractionDigits: decimals, maximumFractionDigits: decimals }));
 
     }, [amount, currencyCode, mode, rates, activeCurrency]);
 
