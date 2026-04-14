@@ -109,14 +109,6 @@ export interface AdminData {
   customers: CustomerData[];
 }
 
-export interface ChatMessage {
-  id: number;
-  role: 'user' | 'model';
-  text: string;
-  isThinking?: boolean;
-  component?: React.ReactNode;
-}
-
 export interface LeadData {
   name: string;
   email: string;
@@ -134,97 +126,5 @@ export interface BlogPost {
   category: string;
   imageUrl: string;
   content: string;
-}
-
-// --- Umrah Types ---
-export type UmrahStatus = 'Enquiry' | 'Quoted' | 'Confirmed' | 'Paid' | 'Completed' | 'Cancelled';
-export type UmrahPackageTier = '3-Star' | '4-Star' | '5-Star' | 'Custom';
-
-export interface UmrahEnquiry {
-  id: string;
-  created_at: string;
-  updated_at: string;
-  // Customer details
-  customer_name: string;
-  email: string;
-  phone: string;
-  // Trip details
-  adults: number;
-  children: number;
-  preferred_dates: string;
-  duration_nights: number;
-  package_tier: UmrahPackageTier;
-  // Status & notes
-  status: UmrahStatus;
-  quoted_price?: number;
-  notes: string;
-  assigned_to?: string;
-}
-
-// --- Travel Types ---
-export type TravelBookingType = 'Flight' | 'Hotel' | 'Package' | 'Other';
-export type TravelStatus = 'Enquiry' | 'Searching' | 'Quoted' | 'Booked' | 'Completed' | 'Cancelled';
-
-export interface TravelBooking {
-  id: string;
-  created_at: string;
-  updated_at: string;
-  // Customer details
-  customer_name: string;
-  email: string;
-  phone: string;
-  // Trip details
-  booking_type: TravelBookingType;
-  destination: string;
-  departure_date: string;
-  return_date?: string;
-  passengers: number;
-  // Status & pricing
-  status: TravelStatus;
-  quoted_price?: number;
-  confirmed_price?: number;
-  notes: string;
-}
-
-// --- Phone Service Types ---
-export type RepairStatus = 'Received' | 'Diagnosing' | 'Awaiting Parts' | 'Repairing' | 'Ready' | 'Collected' | 'Cancelled';
-export type BuybackStatus = 'Quote Given' | 'Accepted' | 'Paid' | 'Resold' | 'Rejected';
-
-export interface PhoneRepair {
-  id: string;
-  created_at: string;
-  updated_at: string;
-  // Customer details
-  customer_name: string;
-  phone: string;
-  // Device details
-  device_brand: string;
-  device_model: string;
-  issue_description: string;
-  // Status & pricing
-  status: RepairStatus;
-  estimated_cost?: number;
-  final_cost?: number;
-  notes: string;
-  branch: string;
-}
-
-export interface PhoneBuyback {
-  id: string;
-  created_at: string;
-  // Customer details
-  customer_name: string;
-  phone: string;
-  // Device details
-  device_brand: string;
-  device_model: string;
-  storage_gb: number;
-  condition: 'Excellent' | 'Good' | 'Fair' | 'Poor';
-  // Pricing
-  quoted_price: number;
-  paid_price?: number;
-  status: BuybackStatus;
-  notes: string;
-  branch: string;
 }
 

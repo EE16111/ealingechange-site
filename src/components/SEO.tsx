@@ -9,12 +9,42 @@ interface Props {
     url?: string;
 }
 
+const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "CurrencyExchange",
+    "name": "Ealing Exchange",
+    "description": "Best currency exchange rates in West London. 0% commission on all exchanges.",
+    "url": "https://ealingexchange.co.uk",
+    "telephone": "+442088406420",
+    "email": "info@ealingexchange.co.uk",
+    "priceRange": "$$",
+    "image": "https://ealingexchange.co.uk/og-image.png",
+    "address": [
+        {
+            "@type": "PostalAddress",
+            "streetAddress": "16 The Broadway, West Ealing",
+            "addressLocality": "London",
+            "postalCode": "W13 0SR",
+            "addressCountry": "GB"
+        },
+        {
+            "@type": "PostalAddress",
+            "streetAddress": "111 Uxbridge Rd, Hanwell",
+            "addressLocality": "London",
+            "postalCode": "W7 3ST",
+            "addressCountry": "GB"
+        }
+    ],
+    "openingHours": "Mo-Sa 09:00-18:00",
+    "sameAs": []
+};
+
 const SEO: React.FC<Props> = ({
     title = 'Ealing Exchange | Best Currency Exchange Rates in West London',
     description = 'Get the best exchange rates on travel money in Ealing. 0% commission, reserve online, collect in-store at West Ealing or Hanwell. Compare rates now!',
     keywords = 'currency exchange, travel money, buy euros, buy dollars, ealing exchange, west ealing, hanwell, best rates london, 0 commission',
     image = '/og-image.png',
-    url = 'https://www.ealingexchange.co.uk'
+    url = 'https://ealingexchange.co.uk'
 }) => {
     return (
         <Helmet>
@@ -40,8 +70,14 @@ const SEO: React.FC<Props> = ({
 
             {/* Canonical */}
             <link rel="canonical" href={url} />
+
+            {/* JSON-LD Structured Data */}
+            <script type="application/ld+json">
+                {JSON.stringify(localBusinessSchema)}
+            </script>
         </Helmet>
     );
 };
 
 export default SEO;
+

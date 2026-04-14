@@ -39,8 +39,8 @@ const ContactPage: React.FC<PageProps> = ({ stores, onNavigate }) => {
             stores.forEach(store => {
                 const container = mapRefs.current[store.store_id];
                 if (container && !container.innerHTML) {
-                    const lat = store.name.toLowerCase().includes('west ealing') ? 51.5126 : 51.5074;
-                    const lng = store.name.toLowerCase().includes('west ealing') ? -0.3225 : -0.3396;
+                const lat = (store as any).lat || (store.name.toLowerCase().includes('west ealing') ? 51.5126 : 51.5074);
+                    const lng = (store as any).lng || (store.name.toLowerCase().includes('west ealing') ? -0.3225 : -0.3396);
                     
                     const map = window.L.map(container).setView([lat, lng], 15);
                     window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

@@ -193,7 +193,7 @@ const SettingsTab: React.FC = () => {
                         </div>
                         <div>
                             <p className="text-slate-500 font-bold uppercase text-xs">Backend</p>
-                            <p className="text-slate-800">Google Apps Script + Sheets</p>
+                            <p className="text-slate-800">Firebase Firestore</p>
                         </div>
                         <div>
                             <p className="text-slate-500 font-bold uppercase text-xs">Hosting</p>

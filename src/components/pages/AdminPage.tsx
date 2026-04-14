@@ -6,10 +6,6 @@ import CustomersTab from '../admin/CustomersTab';
 import SettingsTab from '../admin/SettingsTab';
 import RatesTab from '../admin/RatesTab';
 import BlogTab from '../admin/BlogTab';
-import UmrahTab from '../admin/UmrahTab';
-import TravelTab from '../admin/TravelTab';
-import PhoneRepairsTab from '../admin/PhoneRepairsTab';
-import PhoneBuybackTab from '../admin/PhoneBuybackTab';
 import Card from '../ui/Card';
 
 interface Props {
@@ -20,20 +16,12 @@ interface Props {
 const AdminPage: React.FC<Props> = ({ user, onLogout }) => {
   const [activeTab, setActiveTab] = useState('Dashboard');
 
-  const tabs = ['Dashboard', 'Umrah', 'Travel', 'Repairs', 'Buyback', 'Orders', 'Rates & Inventory', 'Customers', 'Blog', 'Settings'];
+  const tabs = ['Dashboard', 'Orders', 'Rates & Inventory', 'Customers', 'Blog', 'Settings'];
 
   const renderTabContent = () => {
     switch (activeTab) {
       case 'Dashboard':
         return <DashboardTab />;
-      case 'Umrah':
-        return <UmrahTab />;
-      case 'Travel':
-        return <TravelTab />;
-      case 'Repairs':
-        return <PhoneRepairsTab />;
-      case 'Buyback':
-        return <PhoneBuybackTab />;
       case 'Orders':
         return <FulfillmentTab />;
       case 'Rates & Inventory':

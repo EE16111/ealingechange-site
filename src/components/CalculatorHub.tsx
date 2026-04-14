@@ -111,7 +111,7 @@ const CalculatorHub: React.FC<Props> = ({ currencies, rates, stores, mode, setMo
                 </div>
                 <h3 className="text-2xl font-bold text-slate-800 mb-2">Reservation Confirmed!</h3>
                 <p className="text-slate-600 mb-8 max-w-xs">
-                    We've sent a confirmation email to <strong>{formEmail}</strong>. Please bring your ID when you collect from {selectedBranch}.
+                    Your reservation has been received. Please bring your ID when you collect from {selectedBranch}. Our team will contact you at <strong>{formEmail}</strong> to confirm.
                 </p>
                 <button
                     onClick={handleReset}
