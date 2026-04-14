@@ -3,6 +3,12 @@ import type { Store } from '../../types';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon';
 import Card from '../ui/Card';
 
+declare global {
+  interface Window {
+    L: any;
+  }
+}
+
 interface PageProps {
     stores: Store[];
     onNavigate: (path: string) => void;
