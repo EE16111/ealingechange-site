@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import type { Store, SiteSettings } from '../types';
 import { CalculatorMode } from '../types';
 import FacebookIcon from './icons/FacebookIcon';
@@ -18,27 +18,27 @@ const Footer: React.FC<FooterProps> = ({ stores, siteSettings, onNavigate }) => 
     {
       title: 'Travel Money',
       links: [
-        { label: 'Travel Money Services', action: () => onNavigate('/') },
-        { label: 'Click & Collect', action: () => onNavigate('/', CalculatorMode.BUY_FOREIGN) },
-        { label: 'Click & Sell', action: () => onNavigate('/', CalculatorMode.SELL_FOREIGN) },
-        { label: 'Live Exchange Rates', action: () => onNavigate('/') },
+        { label: 'Travel Money Services', to: '/' },
+        { label: 'Click & Collect', to: '/', state: { mode: CalculatorMode.BUY_FOREIGN } },
+        { label: 'Click & Sell', to: '/', state: { mode: CalculatorMode.SELL_FOREIGN } },
+        { label: 'Live Exchange Rates', to: '/' },
       ],
     },
     {
       title: 'Quick Links',
       links: [
-        { label: 'Store Finder', action: () => onNavigate('/contact') },
-        { label: 'Blog', action: () => onNavigate('/blog') },
-        { label: 'FAQs', action: undefined },
-        { label: 'Money Transfers', action: () => onNavigate('/money-transfer') },
+        { label: 'Store Finder', to: '/contact' },
+        { label: 'Blog', to: '/blog' },
+        { label: 'FAQs', to: undefined },
+        { label: 'Money Transfers', to: '/money-transfer' },
       ],
     },
-     {
+    {
       title: 'Information',
       links: [
-        { label: 'About Us', action: undefined },
-        { label: 'Contact Us', action: () => onNavigate('/contact') },
-        { label: 'Careers', action: undefined },
+        { label: 'About Us', to: undefined },
+        { label: 'Contact Us', to: '/contact' },
+        { label: 'Careers', to: undefined },
       ],
     },
   ];
@@ -59,21 +59,39 @@ const Footer: React.FC<FooterProps> = ({ stores, siteSettings, onNavigate }) => 
 
   const reviewLink = siteSettings['google_review_link'];
 
-  const renderLink = (link: {label: string, action?: () => void}) => {
-     const hasAction = link.action !== undefined;
-     const Component = hasAction ? 'a' : 'span';
-     const props = hasAction 
-        ? { href: '#', onClick: (e: React.MouseEvent) => { e.preventDefault(); link.action?.(); } } 
-        : {};
+  const renderLink = (link: { label: string, to?: string, state?: any }) => {
+    const hasTo = link.to !== undefined;
 
-     return (
-        <Component
-            {...props}
-            className={`text-sm ${hasAction ? 'text-slate-400 hover:text-white transition-colors' : 'text-slate-500 cursor-default'}`}
+    if (!hasTo) {
+      return (
+        <span className="text-sm text-slate-500 cursor-default">
+          {link.label}
+        </span>
+      );
+    }
+
+    // Special handling for the CalculatorMode which currently needs onNavigate
+    // We'll use onClick to trigger onNavigate if state is provided, or just Link
+    if (link.state) {
+      return (
+        <a
+          href="/"
+          onClick={(e) => { e.preventDefault(); onNavigate(link.to!, link.state.mode); }}
+          className="text-sm text-slate-400 hover:text-white transition-colors"
         >
-            {link.label}
-        </Component>
-     );
+          {link.label}
+        </a>
+      );
+    }
+
+    return (
+      <Link
+        to={link.to!}
+        className="text-sm text-slate-400 hover:text-white transition-colors"
+      >
+        {link.label}
+      </Link>
+    );
   };
 
   return (
@@ -154,9 +172,9 @@ const Footer: React.FC<FooterProps> = ({ stores, siteSettings, onNavigate }) => 
                 ))}
             </div>
              <div className="mt-4 md:mt-0">
-                 <button onClick={() => onNavigate('/admin')} className="text-slate-500 hover:text-slate-300 transition-colors">
+                 <Link to="/admin" className="text-slate-500 hover:text-slate-300 transition-colors">
                     Admin Panel
-                 </button>
+                 </Link>
              </div>
         </div>
       </div>

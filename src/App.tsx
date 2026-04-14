@@ -16,6 +16,7 @@ import LiveRatesTable from './components/LiveRatesTable';
 import ReviewsSection from './components/ReviewsSection';
 import FAQSection from './components/FAQSection';
 import SEO from './components/SEO';
+import { Routes, Route, useLocation, useNavigate, Navigate } from 'react-router-dom';
 
 // Lazy-loaded page components for code splitting
 const ContactPage = lazy(() => import('./components/pages/ContactPage'));
@@ -24,26 +25,25 @@ const MoneyTransferPage = lazy(() => import('./components/pages/MoneyTransferPag
 const BlogPage = lazy(() => import('./components/pages/BlogPage'));
 const BlogPostPage = lazy(() => import('./components/pages/BlogPostPage'));
 
+// Helper component to scroll to top on route change
+const ScrollToTop: React.FC = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
+
 const App: React.FC = () => {
   const [appData, setAppData] = useState<AppData | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [path, setPath] = useState(window.location.pathname);
+  const location = useLocation();
+  const navigate = useNavigate();
   const [calculatorMode, setCalculatorMode] = useState<CalculatorMode>(CalculatorMode.BUY_FOREIGN);
   const [selectedCurrencyForCalc, setSelectedCurrencyForCalc] = useState<string>('');
   const [adminUser, setAdminUser] = useState<AdminUser | null>(null);
   const [showAdminLogin, setShowAdminLogin] = useState<boolean>(false);
-
-  const handlePopState = () => {
-    setPath(window.location.pathname);
-  };
-
-  useEffect(() => {
-    window.addEventListener('popstate', handlePopState);
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-    };
-  }, []);
 
   // Verify admin session via Firebase Auth (not localStorage)
   useEffect(() => {
@@ -56,9 +56,8 @@ const App: React.FC = () => {
         });
       } else {
         setAdminUser(null);
-        if (path === '/admin') {
-          setPath('/');
-          window.history.pushState({}, '', '/');
+        if (location.pathname === '/admin') {
+          navigate('/');
         }
       }
     });
@@ -93,13 +92,8 @@ const App: React.FC = () => {
   }, []);
 
   const handleNavigate = (newPath: string, newMode?: CalculatorMode) => {
-    if (newPath === '/admin') {
-      if (adminUser) {
-        setPath('/admin');
-        window.history.pushState({}, '', '/admin');
-      } else {
-        setShowAdminLogin(true);
-      }
+    if (newPath === '/admin' && !adminUser) {
+      setShowAdminLogin(true);
       return;
     }
 
@@ -107,25 +101,19 @@ const App: React.FC = () => {
       setCalculatorMode(newMode);
     }
 
-    if (path !== newPath) {
-      setPath(newPath);
-      window.history.pushState({}, '', newPath);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    navigate(newPath);
   };
 
   const handleAdminLoginSuccess = (user: AdminUser) => {
     setAdminUser(user);
     setShowAdminLogin(false);
-    setPath('/admin');
-    window.history.pushState({}, '', '/admin');
+    navigate('/admin');
   }
 
   const handleAdminLogout = async () => {
     await firebaseLogout();
     setAdminUser(null);
-    setPath('/');
-    window.history.pushState({}, '', '/');
+    navigate('/');
   }
 
   const handleSelectCurrencyFromTable = (currency: Currency, mode: CalculatorMode) => {
@@ -137,21 +125,22 @@ const App: React.FC = () => {
 
   // Dynamic SEO based on current path
   const getPageSEO = () => {
-    if (path === '/') {
+    const { pathname } = location;
+    if (pathname === '/') {
       return { title: 'Ealing Exchange | Best Currency Exchange Rates in West London' };
     }
-    if (path.startsWith('/contact')) {
+    if (pathname.startsWith('/contact')) {
       return { title: 'Contact Us | Ealing Exchange', description: 'Visit our branches in West Ealing or Hanwell. Get directions, opening hours, and contact details.' };
     }
-    if (path.startsWith('/money-transfer')) {
+    if (pathname.startsWith('/money-transfer')) {
       return { title: 'International Money Transfer | Western Union Agent | Ealing Exchange', description: 'Send money worldwide with Western Union at Ealing Exchange. Fast, reliable international transfers.' };
     }
-    if (path.startsWith('/blog/')) {
-      const slug = path.split('/blog/')[1];
+    if (pathname.startsWith('/blog/')) {
+      const slug = pathname.split('/blog/')[1];
       const post = blogPosts.find(p => p.slug === slug);
       if (post) return { title: `${post.title} | Ealing Exchange Blog`, description: post.description };
     }
-    if (path.startsWith('/blog')) {
+    if (pathname.startsWith('/blog')) {
       return { title: 'Travel Money Tips & Guides | Ealing Exchange Blog', description: 'Expert advice on currency exchange, travel budgeting, and getting the best rates.' };
     }
     return {};
@@ -205,36 +194,25 @@ const App: React.FC = () => {
 
     if (!appData) return null;
 
-    if (path === '/') {
-      return renderHomePage();
-    }
-
-
-    const pageContent = () => {
-      if (path.startsWith('/admin') && adminUser) {
-        return <AdminPage user={adminUser} onLogout={handleAdminLogout} />;
-      }
-      if (path.startsWith('/contact')) {
-        return <ContactPage stores={appData.stores} onNavigate={handleNavigate} />;
-      }
-      if (path.startsWith('/money-transfer')) {
-        return <MoneyTransferPage onNavigate={handleNavigate} />;
-      }
-      if (path.startsWith('/blog/')) {
-        const slug = path.split('/blog/')[1];
-        const post = blogPosts.find(p => p.slug === slug);
-        return <BlogPostPage post={post} onNavigate={handleNavigate} />;
-      }
-      if (path.startsWith('/blog')) {
-        return <BlogPage posts={blogPosts} onNavigate={handleNavigate} />;
-      }
-      return renderHomePage();
-    };
-
     return (
-      <div className="container mx-auto px-4 py-8 md:py-12">
-        {pageContent()}
-      </div>
+      <Routes>
+        <Route path="/" element={renderHomePage()} />
+        <Route path="/contact" element={<div className="container mx-auto px-4 py-8 md:py-12"><ContactPage stores={appData.stores} /></div>} />
+        <Route path="/money-transfer" element={<div className="container mx-auto px-4 py-8 md:py-12"><MoneyTransferPage /></div>} />
+        <Route path="/blog" element={<div className="container mx-auto px-4 py-8 md:py-12"><BlogPage posts={blogPosts} /></div>} />
+        <Route path="/blog/:slug" element={<div className="container mx-auto px-4 py-8 md:py-12"><BlogPostPage /></div>} />
+        <Route
+          path="/admin"
+          element={
+            adminUser ? (
+              <div className="container mx-auto px-4 py-8 md:py-12"><AdminPage user={adminUser} onLogout={handleAdminLogout} /></div>
+            ) : (
+              <Navigate to="/" replace />
+            )
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     );
   };
 
@@ -246,6 +224,7 @@ const App: React.FC = () => {
           DEMO MODE - NOT CONNECTED TO LIVE BACKEND
         </div>
       )}
+      <ScrollToTop />
       <Header onNavigate={handleNavigate} />
       <main className="flex-grow">
         <Suspense fallback={<div className="flex justify-center items-center min-h-[300px]"><Spinner /></div>}>

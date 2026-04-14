@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import type { Store } from '../../types';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon';
 import Card from '../ui/Card';
@@ -11,10 +12,9 @@ declare global {
 
 interface PageProps {
     stores: Store[];
-    onNavigate: (path: string) => void;
 }
 
-const ContactPage: React.FC<PageProps> = ({ stores, onNavigate }) => {
+const ContactPage: React.FC<PageProps> = ({ stores }) => {
     const mapRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
     useEffect(() => {
@@ -65,10 +65,10 @@ const ContactPage: React.FC<PageProps> = ({ stores, onNavigate }) => {
 
     return (
         <Card>
-            <button onClick={() => onNavigate('/')} className="flex items-center text-sm font-semibold text-brand-blue hover:text-brand-yellow transition-colors mb-8 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow rounded">
+            <Link to="/" className="flex items-center text-sm font-semibold text-brand-blue hover:text-brand-yellow transition-colors mb-8 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow rounded w-fit">
                 <ArrowLeftIcon className="w-5 h-5 mr-2" />
                 Back to Home
-            </button>
+            </Link>
             <h1 className="text-3xl lg:text-4xl font-bold text-brand-blue mb-2">Contact & Locations</h1>
             <p className="text-slate-500 mb-8">Get in touch or visit us at one of our branches.</p>
 

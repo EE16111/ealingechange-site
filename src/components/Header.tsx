@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { CalculatorMode } from '../types';
 import MenuIcon from './icons/MenuIcon';
 import CloseIcon from './icons/CloseIcon';
@@ -15,13 +16,15 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
         setIsMobileMenuOpen(false);
     };
 
+    const linkClass = "block md:inline-block w-full text-left md:text-center text-slate-700 hover:text-brand-yellow transition-colors px-3 py-2 rounded-md font-medium";
+
     const navLinks = (
         <>
-            <button onClick={() => handleNav('/', CalculatorMode.BUY_FOREIGN)} className="block md:inline-block w-full text-left md:text-center text-slate-700 hover:text-brand-yellow transition-colors px-3 py-2 rounded-md font-medium">Buy Currency</button>
-            <button onClick={() => handleNav('/', CalculatorMode.SELL_FOREIGN)} className="block md:inline-block w-full text-left md:text-center text-slate-700 hover:text-brand-yellow transition-colors px-3 py-2 rounded-md font-medium">Sell Currency</button>
-            <button onClick={() => handleNav('/')} className="block md:inline-block w-full text-left md:text-center text-slate-700 hover:text-brand-yellow transition-colors px-3 py-2 rounded-md font-medium">Live Rates</button>
-            <button onClick={() => handleNav('/blog')} className="block md:inline-block w-full text-left md:text-center text-slate-700 hover:text-brand-yellow transition-colors px-3 py-2 rounded-md font-medium">Blog</button>
-            <button onClick={() => handleNav('/contact')} className="block md:inline-block w-full text-left md:text-center text-slate-700 hover:text-brand-yellow transition-colors px-3 py-2 rounded-md font-medium">Contact</button>
+            <button onClick={() => handleNav('/', CalculatorMode.BUY_FOREIGN)} className={linkClass}>Buy Currency</button>
+            <button onClick={() => handleNav('/', CalculatorMode.SELL_FOREIGN)} className={linkClass}>Sell Currency</button>
+            <NavLink to="/" onClick={() => setIsMobileMenuOpen(false)} className={({ isActive }) => `${linkClass} ${isActive ? 'text-brand-yellow font-bold' : ''}`}>Live Rates</NavLink>
+            <NavLink to="/blog" onClick={() => setIsMobileMenuOpen(false)} className={({ isActive }) => `${linkClass} ${isActive ? 'text-brand-yellow font-bold' : ''}`}>Blog</NavLink>
+            <NavLink to="/contact" onClick={() => setIsMobileMenuOpen(false)} className={({ isActive }) => `${linkClass} ${isActive ? 'text-brand-yellow font-bold' : ''}`}>Contact</NavLink>
         </>
     );
 
@@ -29,11 +32,11 @@ const Header: React.FC<HeaderProps> = ({ onNavigate }) => {
         <header className="bg-white shadow-sm sticky top-0 z-40">
             <div className="container mx-auto px-4">
                 <div className="flex justify-between items-center h-16">
-                    <button onClick={() => onNavigate('/')} className="focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-yellow rounded-md text-left">
+                    <NavLink to="/" className="focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-yellow rounded-md text-left">
                         <div className="text-2xl font-extrabold text-brand-blue">
                         Ealing <span className="text-brand-yellow">Exchange</span>
                         </div>
-                    </button>
+                    </NavLink>
                     
                     <nav className="hidden md:flex items-center space-x-1">
                         {navLinks}

@@ -1,12 +1,11 @@
-import React from 'react';
-import type { BlogPost } from '../../types';
+import { useEffect } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { blogPosts } from '../../data/blogPosts';
 import Card from '../ui/Card';
 import ArrowLeftIcon from '../icons/ArrowLeftIcon';
 
 interface Props {
-  post?: BlogPost;
-  onNavigate: (path: string) => void;
+  onNavigate?: (path: string) => void;
 }
 
 const SocialShare: React.FC = () => {
@@ -36,7 +35,7 @@ const CTA: React.FC = () => (
   </div>
 )
 
-const RelatedPosts: React.FC<{ currentSlug: string, onNavigate: (path: string) => void }> = ({ currentSlug, onNavigate }) => {
+const RelatedPosts: React.FC<{ currentSlug: string }> = ({ currentSlug }) => {
   // Get 3 random related posts (excluding current)
   // Simply filter and slice for demo
   const related = blogPosts.filter(p => p.slug !== currentSlug).slice(0, 3);
@@ -48,7 +47,7 @@ const RelatedPosts: React.FC<{ currentSlug: string, onNavigate: (path: string) =
       <h3 className="text-2xl font-bold text-brand-blue mb-6">More from our Blog</h3>
       <div className="grid md:grid-cols-3 gap-6">
         {related.map(post => (
-          <div key={post.slug} className="group cursor-pointer" onClick={() => onNavigate(`/blog/${post.slug}`)}>
+          <Link key={post.slug} className="group cursor-pointer" to={`/blog/${post.slug}`}>
             <div className="relative h-48 mb-4 overflow-hidden rounded-lg">
               <img
                 src={post.imageUrl}
@@ -58,21 +57,25 @@ const RelatedPosts: React.FC<{ currentSlug: string, onNavigate: (path: string) =
             </div>
             <p className="text-xs font-bold text-brand-yellow uppercase mb-1">{post.category}</p>
             <h4 className="font-bold text-slate-800 group-hover:text-brand-blue transition-colors line-clamp-2">{post.title}</h4>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
   )
 }
 
-const BlogPostPage: React.FC<Props> = ({ post, onNavigate }) => {
+const BlogPostPage: React.FC<Props> = () => {
+  const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+  const post = blogPosts.find(p => p.slug === slug);
+
   if (!post) {
     return (
       <Card>
         <div className="text-center py-16">
           <h1 className="text-3xl font-bold text-red-600">Post Not Found</h1>
           <p className="mt-4 text-slate-500">Sorry, we couldn't find the blog post you were looking for.</p>
-          <button onClick={() => onNavigate('/blog')} className="mt-8 flex items-center mx-auto text-sm font-semibold text-brand-blue hover:text-brand-yellow transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow rounded">
+          <button onClick={() => navigate('/blog')} className="mt-8 flex items-center mx-auto text-sm font-semibold text-brand-blue hover:text-brand-yellow transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow rounded">
             <ArrowLeftIcon className="w-5 h-5 mr-2" />
             Back to Blog
           </button>
@@ -82,14 +85,14 @@ const BlogPostPage: React.FC<Props> = ({ post, onNavigate }) => {
   }
 
   // Scroll to top when post changes
-  React.useEffect(() => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, [post.slug]);
 
   return (
     <Card>
       <div className="max-w-3xl mx-auto">
-        <button onClick={() => onNavigate('/blog')} className="flex items-center text-sm font-semibold text-brand-blue hover:text-brand-yellow transition-colors mb-8 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow rounded">
+        <button onClick={() => navigate('/blog')} className="flex items-center text-sm font-semibold text-brand-blue hover:text-brand-yellow transition-colors mb-8 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-yellow rounded">
           <ArrowLeftIcon className="w-5 h-5 mr-2" />
           Back to Blog
         </button>
@@ -109,7 +112,7 @@ const BlogPostPage: React.FC<Props> = ({ post, onNavigate }) => {
 
         <SocialShare />
         <CTA />
-        <RelatedPosts currentSlug={post.slug} onNavigate={onNavigate} />
+        <RelatedPosts currentSlug={post.slug} />
       </div>
     </Card>
   );
