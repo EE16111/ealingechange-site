@@ -17,7 +17,7 @@ import app from './firebase';
 import type { AppData, ExchangeRates, Store, Currency, SiteSettings, BookingData, RateAlertData, SubscriberData, LeadData, AdminData, AdminOrder, CustomerData } from '../types';
 
 // Initialize Firestore
-const db = getFirestore(app);
+const db = getFirestore(app, 'ealing-exchange');
 
 // Collection references
 const COLLECTIONS = {
