@@ -82,7 +82,7 @@ jobs:
         run: npm ci --legacy-peer-deps
 
       - name: Install Functions Dependencies
-        run: npm ci --prefix functions
+        run: npm install --prefix functions
 
       - name: Build Frontend
         run: npm run build
