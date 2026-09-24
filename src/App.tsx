@@ -62,7 +62,7 @@ const App: React.FC = () => {
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [navigate, location.pathname]);
 
   useEffect(() => {
     const fetchInitialData = async () => {

@@ -69,6 +69,13 @@ const BlogPostPage: React.FC<Props> = () => {
   const navigate = useNavigate();
   const post = blogPosts.find(p => p.slug === slug);
 
+  // Scroll to top when post changes
+  useEffect(() => {
+    if (post) {
+      window.scrollTo(0, 0);
+    }
+  }, [post?.slug]);
+
   if (!post) {
     return (
       <Card>
@@ -83,11 +90,6 @@ const BlogPostPage: React.FC<Props> = () => {
       </Card>
     );
   }
-
-  // Scroll to top when post changes
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [post.slug]);
 
   return (
     <Card>
