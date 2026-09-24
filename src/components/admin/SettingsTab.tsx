@@ -27,8 +27,8 @@ const SettingsTab: React.FC = () => {
             setStores(data.stores);
             setSiteSettings(data.siteSettings || {});
             setRates(data.rates);
-        } catch (err: any) {
-            setError(err.message || 'Failed to load settings');
+        } catch (err: unknown) {
+            setError((err instanceof Error ? err.message : String(err)) || 'Failed to load settings');
         } finally {
             setLoading(false);
         }
@@ -58,8 +58,8 @@ const SettingsTab: React.FC = () => {
             setEditingStoreId(null);
             setSuccessMessage('Store details updated successfully!');
             setTimeout(() => setSuccessMessage(''), 3000);
-        } catch (err: any) {
-            alert('Failed to save: ' + err.message);
+        } catch (err: unknown) {
+            alert('Failed to save: ' + (err instanceof Error ? err.message : String(err)));
         } finally {
             setSaving(false);
         }
@@ -75,8 +75,8 @@ const SettingsTab: React.FC = () => {
             await updateContent(rates, stores, siteSettings);
             setSuccessMessage('Social links updated successfully!');
             setTimeout(() => setSuccessMessage(''), 3000);
-        } catch (err: any) {
-            alert('Failed to save: ' + err.message);
+        } catch (err: unknown) {
+            alert('Failed to save: ' + (err instanceof Error ? err.message : String(err)));
         } finally {
             setSaving(false);
         }

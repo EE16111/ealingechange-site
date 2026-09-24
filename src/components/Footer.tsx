@@ -59,7 +59,7 @@ const Footer: React.FC<FooterProps> = ({ stores, siteSettings, onNavigate }) => 
 
   const reviewLink = siteSettings['google_review_link'];
 
-  const renderLink = (link: { label: string, to?: string, state?: any }) => {
+  const renderLink = (link: { label: string, to?: string, state?: unknown }) => {
     const hasTo = link.to !== undefined;
 
     if (!hasTo) {

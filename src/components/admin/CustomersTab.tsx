@@ -22,8 +22,8 @@ const CustomersTab: React.FC = () => {
         try {
             const data = await getAdminData();
             setCustomers(data.customers);
-        } catch (err: any) {
-            setError(err.message || 'Failed to load customers');
+        } catch (err: unknown) {
+            setError((err instanceof Error ? err.message : String(err)) || 'Failed to load customers');
         } finally {
             setLoading(false);
         }
@@ -35,8 +35,8 @@ const CustomersTab: React.FC = () => {
             const data = await getCustomerDetails(email);
             setSelectedCustomer(data.customer);
             setCustomerOrders(data.orders);
-        } catch (err: any) {
-            alert('Failed to load customer details: ' + err.message);
+        } catch (err: unknown) {
+            alert('Failed to load customer details: ' + (err instanceof Error ? err.message : String(err)));
         } finally {
             setLoadingDetail(false);
         }

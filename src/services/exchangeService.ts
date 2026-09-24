@@ -109,7 +109,7 @@ export const getOrderDetails = async (orderId: string): Promise<AdminOrder> => {
     return order;
 };
 
-export const getCustomerDetails = async (email: string): Promise<{ customer: any; orders: AdminOrder[] }> => {
+export const getCustomerDetails = async (email: string): Promise<{ customer: CustomerData | null; orders: AdminOrder[] }> => {
     const adminData = await getAdminData();
     const customer = adminData.customers.find(c => c.email === email);
     const orders = adminData.recentOrders.filter(o => o.email === email);

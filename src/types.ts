@@ -24,6 +24,8 @@ export interface Store {
   address: string;
   phone: string;
   map_url: string;
+  lat?: number;
+  lng?: number;
 }
 
 export interface SiteSettings {

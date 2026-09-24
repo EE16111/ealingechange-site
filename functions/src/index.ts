@@ -9,7 +9,7 @@ const db = getFirestore();
 
 // 1. Order Confirmation Trigger
 // Listens to new documents in 'orders' and creates an email in the 'mail' collection
-export const sendOrderConfirmation = onDocumentCreated("orders/{orderId}", async (event) => {
+export const sendOrderConfirmation = onDocumentCreated("orders/{orderId}", async () => {
     const snapshot = event.data;
     if (!snapshot) {
         logger.log("No data associated with the event");
@@ -63,7 +63,7 @@ export const sendOrderConfirmation = onDocumentCreated("orders/{orderId}", async
 });
 
 // 2. Automated Rate Alerts Check (Runs Hourly)
-export const checkRateAlerts = onSchedule("every 1 hours", async (event) => {
+export const checkRateAlerts = onSchedule("every 1 hours", async () => {
     logger.log("Running checkRateAlerts job...");
     
     try {

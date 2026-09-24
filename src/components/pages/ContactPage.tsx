@@ -6,7 +6,7 @@ import Card from '../ui/Card';
 
 declare global {
   interface Window {
-    L: any;
+    L: unknown;
   }
 }
 
@@ -19,7 +19,7 @@ const ContactPage: React.FC<PageProps> = ({ stores }) => {
 
     useEffect(() => {
         // Load Leaflet from CDN if not already loaded
-        // @ts-ignore
+        // @ts-expect-error Window.L is populated by external script
         if (!window.L) {
             const link = document.createElement('link');
             link.rel = 'stylesheet';
@@ -39,8 +39,8 @@ const ContactPage: React.FC<PageProps> = ({ stores }) => {
             stores.forEach(store => {
                 const container = mapRefs.current[store.store_id];
                 if (container && !container.innerHTML) {
-                const lat = (store as any).lat || (store.name.toLowerCase().includes('west ealing') ? 51.5126 : 51.5074);
-                    const lng = (store as any).lng || (store.name.toLowerCase().includes('west ealing') ? -0.3225 : -0.3396);
+                const lat = store.lat || (store.name.toLowerCase().includes('west ealing') ? 51.5126 : 51.5074);
+                    const lng = store.lng || (store.name.toLowerCase().includes('west ealing') ? -0.3225 : -0.3396);
                     
                     const map = window.L.map(container).setView([lat, lng], 15);
                     window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

@@ -31,7 +31,7 @@ const AdminLoginModal: React.FC<Props> = ({ onClose, onSuccess }) => {
         role: 'Admin'
       };
       onSuccess(adminUser);
-    } catch (err: any) {
+    } catch (err: unknown) {
       // Format Firebase error messages
       let message = 'Login failed.';
       if (err.code === 'auth/user-not-found') {
@@ -40,8 +40,8 @@ const AdminLoginModal: React.FC<Props> = ({ onClose, onSuccess }) => {
         message = 'Invalid email or password.';
       } else if (err.code === 'auth/too-many-requests') {
         message = 'Too many failed attempts. Please try again later.';
-      } else if (err.message) {
-        message = err.message;
+      } else if ((err instanceof Error ? err.message : String(err))) {
+        message = (err instanceof Error ? err.message : String(err));
       }
       setError(message);
       setIsLoading(false);

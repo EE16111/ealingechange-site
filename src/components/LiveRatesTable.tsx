@@ -64,9 +64,9 @@ const RateAlertModal: React.FC<ModalProps> = ({ isOpen, onClose, currencyCode, c
         setStatus('idle');
         setEmail('');
       }, 2000);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setStatus('error');
-      setErrorMessage(err.message || 'Something went wrong.');
+      setErrorMessage(err instanceof Error ? err.message : 'Something went wrong.');
     }
   };
 

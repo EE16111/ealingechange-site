@@ -74,7 +74,7 @@ const BlogPostPage: React.FC<Props> = () => {
     if (post) {
       window.scrollTo(0, 0);
     }
-  }, [post?.slug]);
+  }, [post, post?.slug]);
 
   if (!post) {
     return (

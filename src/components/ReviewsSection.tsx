@@ -63,7 +63,7 @@ const reviews = [
 
 const ReviewsSection: React.FC = () => {
     useEffect(() => {
-        // @ts-ignore
+        // @ts-expect-error Window.L is populated by external script
         if (!window.L) {
             const link = document.createElement('link');
             link.rel = 'stylesheet';
@@ -82,25 +82,25 @@ const ReviewsSection: React.FC = () => {
         function initMaps() {
             const westEalingContainer = document.getElementById('map-west-ealing');
             if (westEalingContainer && !westEalingContainer.innerHTML) {
-                // @ts-ignore
+                // @ts-expect-error Window.L is populated by external script
                 const map = window.L.map('map-west-ealing').setView([51.5126, -0.3225], 15);
-                // @ts-ignore
+                // @ts-expect-error Window.L is populated by external script
                 window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '© OpenStreetMap contributors'
                 }).addTo(map);
-                // @ts-ignore
+                // @ts-expect-error Window.L is populated by external script
                 window.L.marker([51.5126, -0.3225]).addTo(map).bindPopup('<b>West Ealing Branch</b>').openPopup();
             }
 
             const hanwellContainer = document.getElementById('map-hanwell');
             if (hanwellContainer && !hanwellContainer.innerHTML) {
-                // @ts-ignore
+                // @ts-expect-error Window.L is populated by external script
                 const map = window.L.map('map-hanwell').setView([51.5074, -0.3396], 15);
-                // @ts-ignore
+                // @ts-expect-error Window.L is populated by external script
                 window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '© OpenStreetMap contributors'
                 }).addTo(map);
-                // @ts-ignore
+                // @ts-expect-error Window.L is populated by external script
                 window.L.marker([51.5074, -0.3396]).addTo(map).bindPopup('<b>Hanwell Branch</b>').openPopup();
             }
         }

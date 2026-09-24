@@ -52,8 +52,8 @@ const DashboardTab: React.FC = () => {
         try {
             const currencyData = await getAdminData();
             setData(currencyData);
-        } catch (err: any) {
-            setError(err.message || 'Failed to load dashboard data');
+        } catch (err: unknown) {
+            setError((err instanceof Error ? err.message : String(err)) || 'Failed to load dashboard data');
         } finally {
             setLoading(false);
         }

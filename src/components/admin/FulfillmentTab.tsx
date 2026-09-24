@@ -33,8 +33,8 @@ const FulfillmentTab: React.FC = () => {
         try {
             const data = await getAdminData();
             setOrders(data.recentOrders);
-        } catch (err: any) {
-            setError(err.message || 'Failed to load orders');
+        } catch (err: unknown) {
+            setError((err instanceof Error ? err.message : String(err)) || 'Failed to load orders');
         } finally {
             setLoading(false);
         }
@@ -45,8 +45,8 @@ const FulfillmentTab: React.FC = () => {
         try {
             await updateOrderStatus(orderId, newStatus);
             setOrders(prev => prev.map(o => o.order_id === orderId ? { ...o, status: newStatus } : o));
-        } catch (err: any) {
-            alert('Failed to update status: ' + err.message);
+        } catch (err: unknown) {
+            alert('Failed to update status: ' + (err instanceof Error ? err.message : String(err)));
         } finally {
             setUpdatingOrderId(null);
         }

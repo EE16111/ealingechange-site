@@ -41,8 +41,8 @@ const RatesTab: React.FC = () => {
             setRates(data.rates);
             setStores(data.stores);
             setSiteSettings(data.siteSettings || {});
-        } catch (err: any) {
-            setError('Failed to load rates. ' + err.message);
+        } catch (err: unknown) {
+            setError('Failed to load rates. ' + (err instanceof Error ? err.message : String(err)));
         } finally {
             setLoading(false);
         }
@@ -81,8 +81,8 @@ const RatesTab: React.FC = () => {
                 [editingCurrency]: parseInt(editForm.stock)
             }));
             setEditingCurrency(null);
-        } catch (err: any) {
-            alert('Failed to save changes: ' + err.message);
+        } catch (err: unknown) {
+            alert('Failed to save changes: ' + (err instanceof Error ? err.message : String(err)));
         } finally {
             setSaving(false);
         }
@@ -113,8 +113,8 @@ const RatesTab: React.FC = () => {
             setIsAdding(false);
             setNewCurrency({ code: '', name: '', buy: '', sell: '', stock: '' });
 
-        } catch (err: any) {
-            alert('Failed to create currency: ' + err.message);
+        } catch (err: unknown) {
+            alert('Failed to create currency: ' + (err instanceof Error ? err.message : String(err)));
         } finally {
             setSaving(false);
         }
