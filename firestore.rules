@@ -1,0 +1,53 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Public read access for app data
+    match /settings/{document=**} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+    match /currencies/{document=**} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+    match /stores/{document=**} {
+      allow read: if true;
+      allow write: if isAuthenticated();
+    }
+
+    // Orders - Anyone can create (submit an order), only authenticated admin can read/update
+    match /orders/{document=**} {
+      allow create: if true;
+      allow read, update, delete: if isAuthenticated();
+    }
+
+    // Subscribers - Anyone can create, only admin can read
+    match /subscribers/{document=**} {
+      allow create: if true;
+      allow read, update, delete: if isAuthenticated();
+    }
+
+    // Rate Alerts - Anyone can create, only admin can read
+    match /rateAlerts/{document=**} {
+      allow create: if true;
+      allow read, update, delete: if isAuthenticated();
+    }
+
+    // Leads - Anyone can create, only admin can read
+    match /leads/{document=**} {
+      allow create: if true;
+      allow read, update, delete: if isAuthenticated();
+    }
+
+    // Customers - Only admin can read/write
+    match /customers/{document=**} {
+      allow read, write: if isAuthenticated();
+    }
+  }
+}

@@ -9,6 +9,14 @@
           "ealing-exchange-484820"
         ]
       }
+    },
+    "ealingexchange": {
+      "hosting": {
+        "ealing-exchange": [
+          "ealingexchange"
+        ]
+      }
     }
-  }
+  },
+  "etags": {}
 }

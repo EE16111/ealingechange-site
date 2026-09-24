@@ -3,12 +3,13 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged, User } from 'firebase/auth';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAlxitHqa4qDj5Ogvh4ibsVi2cfwMedY7g",
-    authDomain: "ealing-exchange-484820.firebaseapp.com",
-    projectId: "ealing-exchange-484820",
-    storageBucket: "ealing-exchange-484820.firebasestorage.app",
-    messagingSenderId: "286893104325",
-    appId: "1:286893104325:web:83d897db4318c68c50a4ac"
+    projectId: "ealingexchange",
+    appId: "1:1063994697298:web:772ded61484dcc6d4e618b",
+    storageBucket: "ealingexchange.firebasestorage.app",
+    apiKey: "AIzaSyBcSsbg9RmrZF1Epdxb6eRtuMuiekNAcb0",
+    authDomain: "ealingexchange.firebaseapp.com",
+    messagingSenderId: "1063994697298",
+    measurementId: "G-87T6M1D0Z3"
 };
 
 // Initialize Firebase
