@@ -50,15 +50,6 @@
           ]
         }
       ]
-    },
-    {
-      "target": "umrah",
-      "public": "umrah-booking",
-      "ignore": [
-        "firebase.json",
-        "**/.*",
-        "**/node_modules/**"
-      ]
     }
   ],
   "auth": {
