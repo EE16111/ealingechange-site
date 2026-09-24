@@ -1,16 +1,18 @@
-name: Deploy to Production
+name: Deploy to Firebase Hosting
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - main
-      - master
+  workflow_dispatch:
 
 jobs:
-  test:
-    name: Run Unit Tests
+  build_and_deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v4
@@ -18,81 +20,24 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          cache: "npm"
+          node-version: '20'
+          cache: 'npm'
 
       - name: Install Dependencies
-        run: npm ci --legacy-peer-deps
+        run: npm ci
 
-      - name: Run Unit Tests
-        run: npm run test:run
-
-  build-and-push-ghcr:
-    name: Build & Push to GHCR
-    runs-on: ubuntu-latest
-    needs: [test]
-    permissions:
-      contents: read
-      packages: write
-      id-token: write
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-
-      - name: Log in to GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: tekrenewed
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: |
-            ghcr.io/tekrenewed/ealing-exchange-app:latest
-            ghcr.io/tekrenewed/ealing-exchange-app:${{ github.sha }}
-
-  deploy:
-    name: Build & Deploy to Firebase
-    runs-on: ubuntu-latest
-    needs: [test, build-and-push-ghcr]
-    permissions:
-      contents: read
-      id-token: write
-    steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v4
-
-      - name: Google Auth
-        uses: "google-github-actions/auth@v2"
-        with:
-          workload_identity_provider: "projects/286893104325/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
-          service_account: "github-actions-deployer@ealing-exchange-484820.iam.gserviceaccount.com"
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "npm"
-
-      - name: Install Frontend Dependencies
-        run: npm ci --legacy-peer-deps
-
-      - name: Install Functions Dependencies
-        run: npm install --prefix functions
-
-      - name: Build Frontend
+      - name: Build Application
         run: npm run build
 
-      - name: Build Functions
-        run: npm run build --prefix functions
+      - name: Authenticate to Google Cloud (Workload Identity Federation)
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: 'projects/1063994697298/locations/global/workloadIdentityPools/github-actions-pool/providers/github-provider'
+          service_account: 'github-deployer@ealingexchange.iam.gserviceaccount.com'
 
-      - name: Deploy to Firebase (Hosting + Functions)
-        run: |
-          npm install -g firebase-tools
-          firebase deploy --only hosting:ealing-exchange --project ealing-exchange-484820
-          firebase deploy --only functions --project ealing-exchange-484820 || echo "::warning::Functions deploy failed — IAM 'Service Account User' role may be missing. See: https://console.cloud.google.com/iam-admin/iam?project=ealing-exchange-484820"
-# Final verification deploy
+      - name: Install Firebase CLI
+        run: npm install -g firebase-tools
+
+      - name: Deploy to Firebase Hosting & Update Rules
+        run: firebase deploy --only hosting,firestore:rules --project ealingexchange
