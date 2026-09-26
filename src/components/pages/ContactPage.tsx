@@ -19,7 +19,6 @@ const ContactPage: React.FC<PageProps> = ({ stores }) => {
 
     useEffect(() => {
         // Load Leaflet from CDN if not already loaded
-        // @ts-expect-error Window.L is populated by external script
         if (!window.L) {
             const link = document.createElement('link');
             link.rel = 'stylesheet';
@@ -36,18 +35,24 @@ const ContactPage: React.FC<PageProps> = ({ stores }) => {
         }
 
         function initMaps() {
+            const leaflet = window.L as {
+                map: (container: HTMLElement) => { setView: (center: [number, number], zoom: number) => unknown };
+                tileLayer: (url: string, options: { attribution: string }) => { addTo: (map: unknown) => void };
+                marker: (latlng: [number, number]) => { addTo: (map: unknown) => { bindPopup: (html: string) => { openPopup: () => void } } };
+            };
+
             stores.forEach(store => {
                 const container = mapRefs.current[store.store_id];
                 if (container && !container.innerHTML) {
                 const lat = store.lat || (store.name.toLowerCase().includes('west ealing') ? 51.5126 : 51.5074);
                     const lng = store.lng || (store.name.toLowerCase().includes('west ealing') ? -0.3225 : -0.3396);
                     
-                    const map = window.L.map(container).setView([lat, lng], 15);
-                    window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    const map = leaflet.map(container).setView([lat, lng], 15);
+                    leaflet.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                         attribution: '© OpenStreetMap contributors'
                     }).addTo(map);
 
-                    window.L.marker([lat, lng]).addTo(map)
+                    leaflet.marker([lat, lng]).addTo(map)
                         .bindPopup(`<b>${store.name}</b><br>${store.address}`)
                         .openPopup();
                 }

@@ -63,7 +63,6 @@ const reviews = [
 
 const ReviewsSection: React.FC = () => {
     useEffect(() => {
-        // @ts-expect-error Window.L is populated by external script
         if (!window.L) {
             const link = document.createElement('link');
             link.rel = 'stylesheet';

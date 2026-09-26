@@ -1,5 +1,5 @@
 // Exchange Service - Now using Firebase Firestore
-import type { AppData, AdminUser, BookingData, LeadData, RateAlertData, SubscriberData, AdminData, AdminOrder, Store, ExchangeRates, SiteSettings, Currency } from '../types';
+import type { AppData, AdminUser, BookingData, LeadData, RateAlertData, SubscriberData, AdminData, AdminOrder, CustomerData, Store, ExchangeRates, SiteSettings, Currency } from '../types';
 import {
     getExchangeDataFromFirestore,
     updateRatesInFirestore,
