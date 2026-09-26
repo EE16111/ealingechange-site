@@ -59,7 +59,7 @@ const Footer: React.FC<FooterProps> = ({ stores, siteSettings, onNavigate }) => 
 
   const reviewLink = siteSettings['google_review_link'];
 
-  const renderLink = (link: { label: string, to?: string, state?: unknown }) => {
+  const renderLink = (link: { label: string, to?: string, state?: { mode: CalculatorMode } }) => {
     const hasTo = link.to !== undefined;
 
     if (!hasTo) {
@@ -73,10 +73,11 @@ const Footer: React.FC<FooterProps> = ({ stores, siteSettings, onNavigate }) => 
     // Special handling for the CalculatorMode which currently needs onNavigate
     // We'll use onClick to trigger onNavigate if state is provided, or just Link
     if (link.state) {
+      const { mode } = link.state;
       return (
         <a
           href="/"
-          onClick={(e) => { e.preventDefault(); onNavigate(link.to!, link.state.mode); }}
+          onClick={(e) => { e.preventDefault(); onNavigate(link.to!, mode); }}
           className="text-sm text-slate-400 hover:text-white transition-colors"
         >
           {link.label}
